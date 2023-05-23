@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto</title>
+    <!-- BOOTSTRAP 5.3.0 -->
+    <link rel="stylesheet" href="../public/libs/bootstrap-5.3.0/css/bootstrap.min.css">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="../public/libs/fontawesome/css/all.min.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../public/css/main.css">
+</head>
+<body class="user-project">
+
+
+    
+  
+    <form action="" method="" class="d-flex flex-column h-100">
+        <!-- TOOLBAR -->
+        <div class="header-toolbar ps-2">
+            <!-- FIGURES BAR -->
+            <div class="figures-bar d-flex align-items-center">
+                <div class="d-flex">
+                    <button onclick="selectFigure()"type="button" class="mx-1">
+                        <img src="../public/images/icono-cursor.png" alt="">
+                    </button>
+                    <button onclick="addSquare()" type="button" class="mx-1">
+                        <img src="../public/images/icono-cuadrado.png" alt="">
+                    </button>
+                    <button type="button" class="mx-1">
+                        <img src="../public/images/icono-linea-diagonal.png" alt="">
+                    </button>
+                    <button onclick="addCircle()" type="button" class="mx-1">
+                        <img src="../public/images/icono-circulo.png" alt="">
+                    </button>
+                    <button onclick="addText()" type="button" class="mx-1">
+                        <img src="../public/images/icono-texto.png" alt="">
+                    </button>
+                </div>
+            </div>
+           
+            <div class="project-save   d-flex ">
+                <button class="main-btn save-btn px-3 align-right" href="user-designs.html">MIS PROYECTOS</button>
+                <button class="main-btn save-btn px-3 align-right">GUARDAR CAMBIOS</button>
+            </div>
+        </div>
+        <div class="d-flex h-100">  
+            <div class="area-canvas">
+                <div id="sidebar"></div>
+            </div>
+            <!-- SIDEBAR OPTIONS -->
+            <div class="sidebar-options bgcolor-tertiary">
+                <div class="measures px-2 mb-4">
+                    <!-- TITLE -->
+                    <h2 class="text-center px-2 my-3">
+                        Medidas
+                    </h2>
+                    <div class="row justify-content-center px-2 m-0">
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">X:</label>
+                                <input type="number" name="" id="Xpos" class="ms-2">
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">Y:</label>
+                                <input type="number" name="" id="Ypos" class="ms-2">
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="d-flex justify-content-center">
+                                <label for="">Tamaño:</label>
+                                <input type="number" name="" id="tamaño" >
+                            </div>
+                        </div>
+                  
+                        
+                    </div>
+                </div>
+                <div class="filled px-2 mb-4">
+                    <div class="d-flex flex-column text-center mb-3">
+                        <h2 class="px-2 mb-0">
+                            Relleno
+                        </h2>
+                    </div>
+                   
+                    <div class="row justify-content-center px-2 m-0">
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">R:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">G:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">B:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BORDED -->
+                <div class="filled px-2 mb-4">
+                    <!-- TITLE -->
+                    <div class="d-flex flex-column text-center mb-3">
+                        <h2 class="px-2 mb-0">
+                            Borde
+                        </h2>
+                    </div>         
+                    <!-- INPUTS -->
+                    <div class="row justify-content-center px-2 m-0">
+                        <!-- INPUT "R" -->
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">R:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                        <!-- INPUT "G" -->
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">G:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                        <!-- INPUT "B" -->
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">B:</label>
+                                <input type="text" name="" id="" class="ms-2" >
+                            </div>
+                        </div>
+                        <!-- INPUT "GROSOR" -->
+                        <div class="col-12 mb-2">
+                            <div class="d-flex justify-content-center">
+                                <label for="">Grosor:</label>
+                                <input type="text" name="" id="" class="ms-2">
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                </div><!-- end filled -->
+                <div class="sidebar-elements bgcolor-tertiary  px-2">
+                    <h2 class="text-center p-3">
+                        Elementos
+                    </h2>
+                    <!-- ROW -->
+                    <div class="row">
+                        <!-- COLUMN -->
+                        <div class="col-12">
+                            <!-- FIGURE INFO #1 -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="../public/images/icono-circulo.png" class="icon-figure" alt="">
+                                    <h3 class="name-figure ms-2 mb-0">
+                                        Rectángulo 22
+                                    </h3>
+                                </div>
+                                <div class="btns-figure d-flex align-items-center">
+                                    <button type="button">
+                                        <i class="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <!-- FIGURE INFO #2 -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="../public/images/icono-circulo.png" class="icon-figure" alt="">
+                                    <h3 class="name-figure ms-2 mb-0">
+                                        Rectángulo 22
+                                    </h3>
+                                </div>
+                                <div class="btns-figure d-flex align-items-center">
+                                    <button type="button">
+                                        <i class="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                    <button type="button">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </div><!-- end figure info -->
+                        </div><!-- end column -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+<script src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</html>

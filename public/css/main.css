@@ -1,0 +1,624 @@
+/*-----------------------------------------------*/
+/*          ELEMENTOS GENERALES DE HTML          */
+/*-----------------------------------------------*/
+
+:root {
+    --primary-color: #000000;
+    --secondary-color: #000000;
+    --tertiary-color: #2b2b2c;
+    --green-color: #0FA958;
+    --purple-color: #773EC6;
+    --red-color: #FF3366;
+    --blue-color: #2F81F7;
+    --white-color: #FFFFFF;
+    --black-color: #222222;
+    --gray-color: #F0F0F0;
+    --dark-gray-color: #757575;
+    --gray-alt-color: #757575;
+    --add-btn-color: #0FA958;
+    --remove-btn-color: #FF5364;
+    --hover-btn-color: #94989C;
+}
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+img {
+    max-width: 100%;
+}
+a {
+    text-decoration: none;
+}
+button,input {
+    box-shadow: none;
+    outline: none;
+}
+
+/*-----------------------------------------------*/
+/*                BACKGROUND COLOR               */
+/*-----------------------------------------------*/
+
+.bgcolor-primary { background-color: var(--primary-color) !important; }
+.bgcolor-secondary { background-color: var(--secondary-color) !important; }
+.bgcolor-tertiary { background-color: var(--tertiary-color) !important; }
+.bgcolor-green { background-color: var(--green-color) !important; }
+.bgcolor-purple { background-color: var(--purple-color) !important; }
+.bgcolor-red { background-color: var(--red-color) !important; }
+.bgcolor-blue { background-color: var(--blue-color) !important; }
+.bgcolor-white { background-color: var(--white-color) !important; }
+.bgcolor-black { background-color: var(--black-color) !important; }
+.bgcolor-gray { background-color: var(--gray-color) !important; }
+.bgcolor-dark-gray { background-color: var(--dark-gray-color) !important; }
+.bgcolor-gray-alt { background-color: var(--gray-alt-color) !important; }
+.bgcolor-add-btn { background-color: var(--add-btn-color) !important; }
+.bgcolor-remove-btn { background-color: var(--remove-btn-color) !important; }
+
+/*-----------------------------------------------*/
+/*                   TEXT ALIGN                  */
+/*-----------------------------------------------*/
+
+.text-justify {text-align: justify !important;}
+
+/*-----------------------------------------------*/
+/*                   FONT SIZE                   */
+/*-----------------------------------------------*/
+
+.fs-8 {font-size: 10px !important;}
+.fs-10 {font-size: 10px !important;}
+.fs-12 {font-size: 12px !important;}
+.fs-14 {font-size: 14px !important;}
+.fs-16 {font-size: 16px !important;}
+.fs-18 {font-size: 18px !important;}
+.fs-20 {font-size: 20px !important;}
+.fs-22 {font-size: 22px !important;}
+.fs-24 {font-size: 24px !important;}
+.fs-26 {font-size: 26px !important;}
+.fs-28 {font-size: 28px !important;}
+.fs-30 {font-size: 30px !important;}
+.fs-32 {font-size: 32px !important;}
+.fs-34 {font-size: 34px !important;}
+.fs-36 {font-size: 36px !important;}
+
+/*-----------------------------------------------*/
+/*                   FONT COLOR                  */
+/*-----------------------------------------------*/
+
+.txtcolor-black { color: var(--black-color) !important; }
+.txtcolor-white { color: var(--white-color) !important; }
+
+/*-----------------------------------------------*/
+/*                  MAIN BUTTON                  */
+/*-----------------------------------------------*/
+
+.main-btn, .main-btn:active {
+    border: 2px solid var(--white-color);
+    text-transform: uppercase;
+    text-align: center;
+    min-height: 44px;
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    font-weight: 600;
+}
+.main-btn:hover {
+    border: 2px solid var(--hover-btn-color);
+    background-color: var(--white-color);
+    color: var(--hover-btn-color);
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+/*-----------------------------------------------*/
+/*                  PAGE SUBTITLE                */
+/*-----------------------------------------------*/
+
+.page-subtitle {
+    text-transform: uppercase;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/*-----------------------------------------------*/
+/*                 HEADER - NAVBAR               */
+/*-----------------------------------------------*/
+
+#header {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+#header .navbar-toggler {
+    border: 0;
+    font-size: 22px;
+}
+#header .navbar-toggler span {
+    color: var(--white-color);
+    font-size: 28px;
+}
+#header .navbar-options {
+    width: 100%;  
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+#header .nav-item .nav-link, #header .nav-item .nav-link:active {
+    color: var(--white-color);
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.5s;
+}
+#header .nav-item .nav-link:hover {
+    color: var(--hover-btn-color);
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+/*-----------------------------------------------*/
+/*                  MAIN CONTENT                 */
+/*-----------------------------------------------*/
+
+.main-content .main-banner {
+
+    background-image: url('../images/background.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 91vh;
+}
+
+/*-----------------------------------------------*/
+/*          LANDING PAGE - MAIN BANNER           */
+/*-----------------------------------------------*/
+
+.landing-page .main-banner {
+    color: var(--white-color);
+    text-align: center;
+}
+.landing-page .main-banner .container > h1 {
+    font-size: 64px;
+    font-weight: 700;
+    max-width: 1100px;
+} 
+.landing-page .main-banner .container > h2 {
+    font-size: 28px;
+    font-weight: 600;
+    font-style: italic;
+    max-width: 850px;
+}
+.landing-page .main-banner .container > h3 {
+    font-size: 28px;
+    font-weight: 200;
+    max-width: 900px;
+} 
+
+
+/*-----------------------------------------------*/
+/*                LOGIN & SIGN UP                */
+/*-----------------------------------------------*/
+
+.card-login {
+    background-color: var(--primary-color);
+    border-radius: 25px;
+    position: relative;
+    width: 400px;
+    min-width: 350px;
+    max-width: 400px;
+    color: var(--white-color);
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.35);
+}
+.card-login h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+.card-login label {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: start;
+}
+.card-login input {
+    background-color: var(--white-color);
+    color: var(--black-color);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0.5em 0.6em;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~*/
+/*    BUTTON SUBMIT    */
+/*~~~~~~~~~~~~~~~~~~~~~*/
+.card-login button[type="submit"], .card-login button[type="submit"]:active {
+    background-color: var(--black-color);
+    border: 1px solid #9F9F9F;
+    color: var(--white-color);
+    width: 100%;
+    min-height: 35px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.card-login button[type="submit"]:hover {
+    background-color: #313131;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~*/
+/*    SPAN SEPARATOR    */
+/*~~~~~~~~~~~~~~~~~~~~~~*/
+.card-login span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+.card-login span::before, .card-login span::after {
+    border-bottom: 1px solid white;
+    content: "";
+    position: absolute;
+    top:  58.4%;
+    width: 38%;
+    z-index: 1;
+}
+.card-login span::before { left: 6%; }
+.card-login span::after { right: 6%; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*    BUTTONS (GOOGLE, FACEBOOK AND TWITTER)    */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.card-login button[type="button"] {
+    text-align: left;
+    color: var(--white-color);
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    min-height: 35px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.btn-google { background-color: var(--google-color); }
+.btn-google:hover { background-color: #D6604C; }
+.btn-facebook { background-color: var(--facebook-color); }
+.btn-facebook:hover { background-color: #5C8CD4; }
+.btn-twitter { background-color: var(--twitter-color); }
+.btn-twitter:hover { background-color: #84CFEA; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~*/
+/*    LINK TO SIGN UP    */
+/*~~~~~~~~~~~~~~~~~~~~~~~*/
+.card-login h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.card-login a {
+    color: var(--white-color);
+    text-decoration: underline;
+}
+.card-login a:hover { 
+    color: var(--hover-btn-color); 
+}
+.card-login button[type="submit"], .card-login button[type="button"], .card-login a {
+    transition: all 0.5s;
+}
+.card-login button[type="submit"]:hover, .card-login button[type="button"]:hover, .card-login a:hover {
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+/*-----------------------------------------------*/
+/*                   USER DESIGNS                */
+/*-----------------------------------------------*/
+
+/*~~~~~~~~~~~~~~*/
+/*    HEADER    */
+/*~~~~~~~~~~~~~~*/
+#header .user-data h3 {
+    font-size: 18px;
+    font-weight: 500;
+}
+#header .user-data h4 {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+}
+#header .logout-btn:hover {
+    background-color: var(--red-color);
+    border: 2px solid var(--white-color);
+    color: var(--white-color) !important;
+    -ms-transform: scale(1.05) !important;
+    -webkit-transform: scale(1.05) !important;
+    transform: scale(1.05) !important;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~*/
+/*    MAIN CONTENT    */
+/*~~~~~~~~~~~~~~~~~~~~*/
+.user-designs {
+    color: var(--white-color);
+}
+.user-designs h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+.user-designs h2 {
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+}
+.user-designs .add-btn {
+    border: none !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.user-designs .add-btn:hover {
+    border: none !important;
+    color: var(--white-color);
+}
+
+/*~~~~~~~~~~~~~~~~~~~~*/
+/*    DESIGNS NONE    */
+/*~~~~~~~~~~~~~~~~~~~~*/
+.designs-list .designs-none {
+    min-height: 300px;
+    font-size: 22px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~*/
+/*    CARD DESIGNS    */
+/*~~~~~~~~~~~~~~~~~~~~*/
+.card-design {
+    background-color: var(--tertiary-color);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.card-design img {
+    border-radius: 15px;
+    width: 100%;
+}
+.card-design h1 {
+    font-size: 18px;
+    font-weight: 700;
+}  
+.card-design h2 {
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+}
+.card-design h2 span {
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+}
+.card-design .remove-btn {
+    background-color: var(--remove-btn-color);
+    border: none;
+    color: var(--white-color);
+    font-size: 14px;
+    min-height: 35px;
+    width: fit-content;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.card-design .remove-btn:hover {
+    -ms-transform: scale(1.05) !important;
+    -webkit-transform: scale(1.05) !important;
+    transform: scale(1.05) !important;
+}
+
+/*-----------------------------------------------*/
+/*                   USER PROJECT                */
+/*-----------------------------------------------*/
+
+.user-project {
+    width: 100vw;
+    min-width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    color: var(--white-color);
+}
+
+/*~~~~~~~~~~~~~~~*/
+/*    TOOLBAR    */
+/*~~~~~~~~~~~~~~~*/
+.header-toolbar {
+    background-color: var(--secondary-color);
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    height: 45px;
+    /* max-height: 45px; */
+    min-height: 45px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+/*~~~~~~~~~~~~~~~~~~~*/
+/*    FIGURES BAR    */
+/*~~~~~~~~~~~~~~~~~~~*/
+.header-toolbar .figures-bar {
+    width: 328px;
+    max-width: 328px;
+    min-width: 328px;
+}
+.header-toolbar .figures-bar a img {
+    width: 40px;
+    max-width: 40px;
+    min-width: 40px;
+}
+.header-toolbar .figures-bar button {
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+}
+.header-toolbar .figures-bar button:hover {
+    background-color: var(--tertiary-color);
+}
+.header-toolbar .figures-bar button img {
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~*/
+/*    PROJECT TITLE    */
+/*~~~~~~~~~~~~~~~~~~~~~*/
+.project-title {
+    width: 100%;
+}
+.project-title input {
+    color: var(--white-color);
+    background-color: var(--secondary-color);
+    border-radius: 7px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    width: 85%;
+}
+.project-title input:hover, .project-title input:focus {
+    background-color: var(--primary-color);
+}
+.project-title input:focus {
+    border: 1px solid var(--hover-btn-color);
+}
+
+/*~~~~~~~~~~~~~~~~~~~~*/
+/*    PROJECT SAVE    */
+/*~~~~~~~~~~~~~~~~~~~~*/
+.project-save {
+    min-width: 250px;
+}
+.project-save .save-btn {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    font-size: 14px;
+    min-height: 28px;
+}
+.project-save .save-btn:hover {
+    background-color: var(--blue-color);
+    border: 2px solid var(--white-color);
+    -ms-transform: scale(1.05) !important;
+    -webkit-transform: scale(1.05) !important;
+    transform: scale(1.05) !important;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*    SIDEBAR ELEMENTS    */
+/*~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.sidebar-elements {
+    max-width: 250px;
+    min-width: 250px;
+}
+.sidebar-elements h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+.sidebar-elements .icon-figure {
+    width: 16px;
+    height: 16px;
+}
+.sidebar-elements .name-figure {
+    font-size: 14px;
+    font-weight: 400;
+}
+.sidebar-elements .btns-figure button {
+    background-color: var(--tertiary-color);
+    border-radius: 3px;
+    color: var(--white-color);
+}
+.sidebar-elements .btns-figure button:hover {
+    background-color: var(--hover-btn-color);
+}
+
+/*~~~~~~~~~~~~~~~~~~~*/
+/*    AREA CANVAS    */
+/*~~~~~~~~~~~~~~~~~~~*/
+
+.area-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~*/
+/*    SIDEBAR OPTIONS    */
+/*~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.sidebar-options {
+    max-width: 250px;
+    min-width: 250px;
+}
+.sidebar-options h2 {
+    font-size: 22px;
+    font-weight: 700;
+}
+.sidebar-options h3 {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+}
+.sidebar-options label {
+    font-size: 18px;
+    font-weight: 600;
+}
+.sidebar-options input {
+    background-color: var(--white-color);
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    max-width: 52px;
+}
+.sidebar-options img {
+    max-width: 22px;
+    min-width: 22px;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~*/
+/*    BUTTONS COLORS    */
+/*~~~~~~~~~~~~~~~~~~~~~~*/
+.btn-color {
+    border-radius: 12px;
+    width: 24px;
+    max-width: 24px;
+    min-width: 24px;
+    height: 24px;
+    max-height: 24px;
+    min-height: 24px;
+}
+.btn-color:hover {
+    opacity: 0.8;
+}
+.btn-color-black { background-color: var(--black-color); }
+.btn-color-white { background-color: var(--white-color); }
+.btn-color-yellow { background-color: #FFD977; }
+.btn-color-red { background-color: #FFAFAF; }
+.btn-color-green { background-color: #93FFC6; }
+.btn-color-blue { background-color: #B0C2F2; }
+
+
