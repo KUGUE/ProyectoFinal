@@ -44,13 +44,38 @@
                 <button class="main-btn save-btn px-3 align-right" id="saveButton">GUARDAR CAMBIOS</button>
             </div>
         </div>
-        <div class="d-flex h-100">  
+
+        <div class="d-flex h-100">
+            <!-- SIDEBAR ELEMENTS -->
+            <div class="sidebar-elements bgcolor-tertiary px-2">
+                <h2 class="text-center p-3">
+                    Elementos
+                </h2>
+                <!-- ROW -->
+                <div class="row">
+                    <!-- COLUMN -->
+                    <div class="col-12">
+                        <div id="sidebar-elements"></div>
+                    </div>
+
+                    <button class="nav-link main-btn" id="up" onclick="moveShapeDown()" type="button">
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                    <button class="nav-link main-btn" onclick="moveShapeUp()" id="down" type="button">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- CANVAS AREA -->
             <div class="area-canvas">
                 <div id="sidebar"></div>
             </div>
+
             <!-- SIDEBAR OPTIONS -->
             <div class="sidebar-options bgcolor-tertiary">
-                <div class="measures px-2 mb-4">
+                <div class="measures px-2 mb-0">
                     <!-- TITLE -->
                     <h2 class="text-center px-2 my-3">
                         Medidas
@@ -68,17 +93,23 @@
                                 <input type="number" name="" id="Ypos" class="ms-2">
                             </div>
                         </div>
-                        <div class="">
-                            <div class="d-flex justify-content-center">
-                                <label for="">Tamaño:</label>
-                                <input type="number" name="" id="tamaño" >
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">H:</label>
+                                <input type="number" name="" id="height" >
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for="">W:</label>
+                                <input type="number" name="" id="width" >
                             </div>
                         </div>
 
-                        <div class="">
-                            <div class="d-flex justify-content-center">
-                                <label for="">Texto:</label>
-                                <input type="text" name="" id="texto" >
+                        <div class="col-6 mb-2">
+                            <div class="d-flex justify-content-end">
+                                <label for=""><img src="../public/images/rounded.png" alt=""></label>
+                                <input type="number" name="" id="width" >
                             </div>
                         </div>
                     </div>
@@ -91,8 +122,8 @@
                     </div>
                     <div class="row  px-2 m-0">
                         <div class="col-12 mb-3">                        
-                                <label for="">Color:</label>
-                                <input type="color"  name="" id="RellenoColor" class="">
+                            <label for="">Color:</label>
+                            <input type="color"  name="" id="RellenoColor" class="">
                         </div>
                         
                         <div class="col-12 ">
@@ -115,7 +146,7 @@
                     <div class="row justify-content-center px-2 m-0">
                         <!-- INPUT "R" -->
                         <div class="col-12 mb-2">
-                             <label for="">Color:</label>
+                            <label for="">Color:</label>
                             <input type="color"  value="#000000" name="" id="Bordecolor" class="ms-2">
                         </div>
                         <!-- INPUT "GROSOR" -->
@@ -124,33 +155,34 @@
                             <input type="number" name="" id="Bordegrosor" class="ms-2">
                         </div>
 
-                          <!-- INPUT "GROSOR" -->
-                          <div class="col-12 mb-2">
+                        <!-- INPUT "GROSOR" -->
+                        <div class="col-12 mb-2">
                             <label for="">Opacidad:</label>
                             <input type="number" name="" id="Bordeopacidad" class="ms-2">
                         </div>
                     </div><!-- end row -->
                 </div><!-- end filled -->
-                <div class="sidebar-elements bgcolor-tertiary  px-2">
-                    <h2 class="text-center p-3">
-                        Elementos
-                    </h2>
-                    <!-- ROW -->
-                    <div class="row">
-                        <!-- COLUMN -->
-                        <div class="col-12">
-                            <div id="sidebar-elements"></div> 
+                   <!-- BORDED -->
+                <div class="filled px-2 mb-4">
+                    <!-- TITLE -->
+                    <div class="d-flex flex-column text-center mb-3">
+                        <h2 class="px-2 mb-0">
+                           TEXTO
+                        </h2>
+                    </div>         
+                    <!-- INPUTS -->
+                    <div class="row justify-content-center px-2 m-0">
+                        <!-- INPUT "R" -->
+                        <div class="col-12 mb-2">
+                            <label for="">texto:</label>
+                            <input type="text"   name="" id="texto" class="ms-2">
                         </div>
-                       
-                        <button class="nav-link  main-btn" id="up"  onclick="moveShapeDown()" type="button">
-                            <i class="fa-solid fa-arrow-up"></i>
-                        </button>
-                        <button class="nav-link  main-btn"  onclick="moveShapeUp()" id="down" type="button">
-                            <i class="fa-solid fa-arrow-down"></i>
-                        </button>
-                    
-                    </div>
-                </div>
+                        <div class="col-12 mb-2">
+                            <label for="">tamaño:</label>
+                            <input type="number"   name="" id="tamañotexto" class="ms-2">
+                        </div>
+                    </div><!-- end row -->
+                </div><!-- end filled -->
             </div>
         </div>
     </form>
