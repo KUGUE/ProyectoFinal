@@ -39,7 +39,7 @@ include("./showaccount.php")
                             <h4 class="text-lg-end text-center"><?php echo $correo3; ?></h4>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn logout-btn" href="signup.html">Cerrar
+                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn logout-btn" href="../index.html">Cerrar
                             sesión</a></li>
                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn logout-btn" href="user-project.html">Nuevo proyecto</a></li>
                 </ul>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +13,7 @@
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../public/css/main.css">
 </head>
+
 <body class="user-project">
     <form action="" method="" class="d-flex flex-column h-100">
         <!-- TOOLBAR -->
@@ -19,16 +21,16 @@
             <!-- FIGURES BAR -->
             <div class="figures-bar d-flex align-items-center">
                 <div class="d-flex">
-                    <button onclick="seleccionar()"type="button" class="mx-1">
+                    <button onclick="seleccionar()" type="button" class="mx-1">
                         <img src="../public/images/icono-cursor.png" alt="">
                     </button>
-                    <button onclick="addSquare()" type="button" class="mx-1">
+                    <button onclick="pintarCuadrados()" type="button" class="mx-1">
                         <img src="../public/images/icono-cuadrado.png" alt="">
                     </button>
-                    <button onclick="pintarLine()"type="button" class="mx-1">
+                    <button onclick="pintarLineas()" type="button" class="mx-1">
                         <img src="../public/images/icono-linea-diagonal.png" alt="">
                     </button>
-                    <button onclick="addCircle()" type="button" class="mx-1">
+                    <button onclick="pintarCirculos()" type="button" class="mx-1">
                         <img src="../public/images/icono-circulo.png" alt="">
                     </button>
                     <button onclick="addText()" type="button" class="mx-1">
@@ -40,8 +42,8 @@
                 </div>
             </div>
             <div class="project-save   d-flex ">
-                <button class="main-btn save-btn px-3 align-right" href="user-designs.html">MIS PROYECTOS</button>
-                <button class="main-btn save-btn px-3 align-right" id="saveButton">GUARDAR CAMBIOS</button>
+                <a class="main-btn save-btn px-3 align-right" href="user-designs.php">MIS PROYECTOS</a>
+                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#">GUARDAR CAMBIOS</a>
             </div>
         </div>
 
@@ -51,20 +53,23 @@
                 <h2 class="text-center p-3">
                     Elementos
                 </h2>
+                <div class="col-12 mb-2 d-flex">
+                    <button class="nav-link main-btn" id="up" onclick="moveShapeDown()" type="button"
+                        style="display: inline-block; width: 100%;">
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                    <button class="nav-link main-btn" onclick="moveShapeUp()" id="down" type="button"
+                        style="display: inline-block; width: 100%;">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                </div>
                 <!-- ROW -->
                 <div class="row">
+
                     <!-- COLUMN -->
                     <div class="col-12">
                         <div id="sidebar-elements"></div>
                     </div>
-
-                    <button class="nav-link main-btn" id="up" onclick="moveShapeDown()" type="button">
-                        <i class="fa-solid fa-arrow-up"></i>
-                    </button>
-                    <button class="nav-link main-btn" onclick="moveShapeUp()" id="down" type="button">
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </button>
-
                 </div>
             </div>
 
@@ -72,7 +77,6 @@
             <div class="area-canvas">
                 <div id="sidebar"></div>
             </div>
-
             <!-- SIDEBAR OPTIONS -->
             <div class="sidebar-options bgcolor-tertiary">
                 <div class="measures px-2 mb-0">
@@ -96,20 +100,19 @@
                         <div class="col-6 mb-2">
                             <div class="d-flex justify-content-end">
                                 <label for="">H:</label>
-                                <input type="number" name="" id="height" >
+                                <input type="number" name="" id="height">
                             </div>
                         </div>
                         <div class="col-6 mb-2">
                             <div class="d-flex justify-content-end">
                                 <label for="">W:</label>
-                                <input type="number" name="" id="width" >
+                                <input type="number" name="" id="width">
                             </div>
                         </div>
-
                         <div class="col-6 mb-2">
                             <div class="d-flex justify-content-end">
                                 <label for=""><img src="../public/images/rounded.png" alt=""></label>
-                                <input type="number" name="" id="width" >
+                                <input type="number" name="" id="cornerRadius">
                             </div>
                         </div>
                     </div>
@@ -121,13 +124,12 @@
                         </h2>
                     </div>
                     <div class="row  px-2 m-0">
-                        <div class="col-12 mb-3">                        
+                        <div class="col-12 mb-3">
                             <label for="">Color:</label>
-                            <input type="color"  name="" id="RellenoColor" class="">
+                            <input type="color" name="" id="RellenoColor" class="">
                         </div>
-                        
                         <div class="col-12 ">
-                            <div class=" justify-content-end">
+                            <div class="justify-content-end">
                                 <label for="">Opacidad:</label>
                                 <input type="number" name="" id="RellenoOpacidad" class="">
                             </div>
@@ -141,20 +143,19 @@
                         <h2 class="px-2 mb-0">
                             Borde
                         </h2>
-                    </div>         
+                    </div>
                     <!-- INPUTS -->
                     <div class="row justify-content-center px-2 m-0">
                         <!-- INPUT "R" -->
                         <div class="col-12 mb-2">
                             <label for="">Color:</label>
-                            <input type="color"  value="#000000" name="" id="Bordecolor" class="ms-2">
+                            <input type="color" value="#000000" name="" id="Bordecolor" class="ms-2">
                         </div>
                         <!-- INPUT "GROSOR" -->
                         <div class="col-12 mb-2">
                             <label for="">Grosor:</label>
                             <input type="number" name="" id="Bordegrosor" class="ms-2">
                         </div>
-
                         <!-- INPUT "GROSOR" -->
                         <div class="col-12 mb-2">
                             <label for="">Opacidad:</label>
@@ -162,31 +163,32 @@
                         </div>
                     </div><!-- end row -->
                 </div><!-- end filled -->
-                   <!-- BORDED -->
+                <!-- BORDED -->
                 <div class="filled px-2 mb-4">
                     <!-- TITLE -->
                     <div class="d-flex flex-column text-center mb-3">
                         <h2 class="px-2 mb-0">
-                           TEXTO
+                            TEXTO
                         </h2>
-                    </div>         
+                    </div>
                     <!-- INPUTS -->
                     <div class="row justify-content-center px-2 m-0">
                         <!-- INPUT "R" -->
-                        <div class="col-12 mb-2">
+                        <div class="col-12 mb-2 d-flex">
                             <label for="">texto:</label>
-                            <input type="text"   name="" id="texto" class="ms-2">
+                            <input type="text" name="" id="texto" class="flex-grow-1">
                         </div>
                         <div class="col-12 mb-2">
                             <label for="">tamaño:</label>
-                            <input type="number"   name="" id="tamañotexto" class="ms-2">
+                            <input type="number" name="" id="tamañotexto">
                         </div>
                     </div><!-- end row -->
                 </div><!-- end filled -->
             </div>
-        </div>
-    </form>
+            </div>
+            </form>            
 </body>
 <script src="main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+
 </html>
