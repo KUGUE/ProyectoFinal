@@ -208,7 +208,6 @@ function updateSidebar() {
     opacidad.value = selectedShape.opacity;
     fillColor.value = selectedShape.color;
     opacidadBorde.value = selectedShape.opacityBorder;
-    borderColor.value = selectedShape.borderColor;
     y.value = selectedShape.y;
     x.value = selectedShape.x;
     if (selectedShape.color) {
