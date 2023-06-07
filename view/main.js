@@ -69,6 +69,12 @@ function mouseClicked() {
         updateSidebar();
         break;
       }
+      if (shapes[i] instanceof Linea && shapes[i].contains(mouseX, mouseY)) {
+        selectedShape = shapes[i];
+        selectedText = null; // Reiniciar el objeto de texto seleccionado
+        updateSidebar();
+        break;
+      }
     }
 
     // Verificar si no se hizo clic en ninguna forma y se está arrastrando el mouse
@@ -128,7 +134,6 @@ function mouseClicked() {
   }
 
 }
-
 function updateSidebar() {
   var height = document.getElementById("height");
   height.addEventListener("input", updateFigureFromInput);
@@ -230,6 +235,23 @@ function updateSidebar() {
       color.value = hexColor;
     }
   }
+  if (selectedShape instanceof Linea) {
+    document.getElementById("TEXTO").style.display = "none";
+    document.getElementById("CUADRADO").style.display = "none";
+    document.getElementById("FIGURA1").style.display = "none";
+    document.getElementById("FIGURA2").style.display = "none";
+    document.getElementById("FIGURA3").style.display = "block";
+    y.value = selectedShape.y;
+    x.value = selectedShape.x;
+    width.value = widthInput;
+    bordeTamaño.value = selectedShape.strokeWeight;
+    opacidadBorde.value = selectedShape.opacityBorder;
+    if (selectedShape.borderColor) {
+      let rgb = hexToRgb(selectedShape.borderColor);
+      let hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
+      borderColor.value = hexColor;
+    }
+    }
 }
 function updateFigureFromInput() {
   if (selectedShape) {
@@ -288,6 +310,34 @@ function updateFigureFromInput() {
     if (color) {
       let rgb = hexToRgb(color);
       selectedShape.color = [rgb.r, rgb.g, rgb.b];
+    }
+    if (borderColor) {
+      let rgb = hexToRgb(borderColor);
+      selectedShape.borderColor = [rgb.r, rgb.g, rgb.b];
+    }
+  }
+  if (selectedShape instanceof Linea) {
+    let xInput = parseFloat(document.getElementById("Xpos").value);
+    let yInput = parseFloat(document.getElementById("Ypos").value);
+    let widthInput = parseFloat(document.getElementById("width").value);
+    let bordeTamaño = parseFloat(document.getElementById("Bordegrosor").value);
+    let opacidadBorde = parseFloat(document.getElementById("Bordeopacidad").value);
+    let borderColor = document.getElementById("Bordecolor").value;
+  
+    if (!isNaN(xInput)) {
+      selectedShape.x = xInput;
+    }
+    if (!isNaN(yInput)) {
+      selectedShape.y = yInput;
+    }
+    if (!isNaN(widthInput)) {
+      selectedShape.width = widthInput;
+    }
+    if (!isNaN(bordeTamaño)) {
+      selectedShape.strokeWeight = bordeTamaño;
+    }
+    if (!isNaN(opacidadBorde)) {
+      selectedShape.opacityBorder = opacidadBorde;
     }
     if (borderColor) {
       let rgb = hexToRgb(borderColor);
@@ -400,7 +450,7 @@ class Linea extends Shape {
   display() {
     strokeWeight(this.strokeWeight);
     stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacity);
-    ddaLine(lineStartX, lineStartY, lineEndX, lineEndY);
+    ddaLine(this.x, this.y, this.x2, this.y2);
   }
   contains(x, y) {
     // Verificar si el punto (x, y) está cerca de la línea (dentro de un umbral de distancia)
@@ -443,7 +493,7 @@ function mouseDragged() {
   if (isDrawingLine && line) {
     lineEndX = mouseX;
     lineEndY = mouseY;
-    linea.x2 = lineEndX; // Actualiza las coordenadas finales de la línea
+    linea.x2 = lineEndX; 
     linea.y2 = lineEndY;
     updateElementsList();
   }
@@ -468,8 +518,10 @@ function draw() {
     circle.display();
   }
 
-  if (isDrawing) {
-    line(lineStartX, lineStartY, lineEndX, lineEndY);
+  if (isDrawingLine && linea) {
+    linea.x2 = mouseX;
+    linea.y2 = mouseY;
+    updateElementsList();
   }
 
   for (let shape of shapes) {
@@ -523,20 +575,18 @@ function mousePressed() {
     lineStartY = mouseY;
     linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [255, 255, 255], [255, 255, 255], 255, 10);
     linea.name = "Linea";
+    shapes.push(linea);
     updateElementsList();
   }
 }
 function mouseReleased() {
   // Guardar las coordenadas finales de la línea y finalizar el dibujo
-  if (isDrawingLine && linea) {
+  if (isDrawingLine ) {
     lineEndX = mouseX;
     lineEndY = mouseY;
     linea.x2 = lineEndX; // Actualiza las coordenadas finales de la línea
     linea.y2 = lineEndY;
-    shapes.push(linea);
-    linea = null; // Restablece la variable linea a null para poder crear una nueva instancia en el próximo dibujo
     updateElementsList();
-
   }
   isDrawingSquare = false;
   isDrawingCircle = false;
@@ -566,6 +616,12 @@ function canvasMouseClicked() {
         selectedText = shapes[i];
         updateSidebar();
         return; // Salir de la función para evitar deseleccionar la forma
+      }
+      if (shapes[i] instanceof Linea && shapes[i].contains(mouseX, mouseY)) {
+        selectedShape = shapes[i];
+        selectedText = null; // Reiniciar el objeto de texto seleccionado
+        updateSidebar();
+        break;
       }
     }
   }
@@ -794,8 +850,6 @@ guardarCambiosButton.addEventListener('click', function () {
   // Enviar la solicitud al servidor
   xhr.send(formData);
 });
-
-
 function obtenerFigurasJson() {
   let shapesJson = JSON.stringify(shapes);
   console.log(shapesJson);
