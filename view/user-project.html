@@ -58,11 +58,11 @@
                     Elementos
                 </h2>
                 <div class="col-12 mb-2 d-flex">
-                    <button class="nav-link main-btn" id="up" onclick="moveShapeUp()" type="button"
+                    <button class="nav-link main-btn" id="up" onclick="moveShapeDown()" type="button"
                         style="display: inline-block; width: 100%;">
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
-                    <button class="nav-link main-btn" onclick="moveShapeDown()" id="down" type="button"
+                    <button class="nav-link main-btn" onclick="moveShapeUp()" id="down" type="button"
                         style="display: inline-block; width: 100%;">
                         <i class="fa-solid fa-arrow-down"></i>
                     </button>
@@ -88,13 +88,13 @@
                         Medidas
                     </h2>
                     <div class="row justify-content-center px-2 m-0">
-                        <div class="col-6 mb-2">
+                        <div class="col-6 mb-2" id="xinput">
                             <div class="d-flex justify-content-end">
                                 <label for="">X:</label>
                                 <input type="number" name="" id="Xpos" class="ms-2">
                             </div>
                         </div>
-                        <div class="col-6 mb-2">
+                        <div class="col-6 mb-2" id="yinput">
                             <div class="d-flex justify-content-end">
                                 <label for="">Y:</label>
                                 <input type="number" name="" id="Ypos" class="ms-2">
@@ -152,7 +152,7 @@
                         <!-- INPUT "R" -->
                         <div class="col-12 mb-2">
                             <label for="">Color:</label>
-                            <input type="color" value="#000000" name="" id="Bordecolor" class="ms-2">
+                            <input type="color" name="" id="Bordecolor" class="ms-2">
                         </div>
                         <!-- INPUT "GROSOR" -->
                         <div class="col-12 mb-2">

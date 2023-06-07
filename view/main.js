@@ -7,14 +7,23 @@ let isDrawingCircle = false;
 let isDrawingLine = false;
 let circle = null;
 let line = null;
-let isDrawing = false;
 let lineStartX, lineStartY, endX, endY;
 
 
 function deselectShape() {
+  
   selectedShape = null;
   updateSidebar();
-  document.getElementById("TEXTO").style.display = "block";
+  document.getElementById("TEXTO").style.display = "none";
+  document.getElementById("CUADRADO").style.display = "none";
+  document.getElementById("FIGURA1").style.display = "none";
+  document.getElementById("FIGURA2").style.display = "none";
+  document.getElementById("FIGURA3").style.display = "none";
+  document.getElementById("FIGURA4").style.display = "none";
+  document.getElementById("TEXTO").style.display = "none";
+  document.getElementById("xinput").style.display = "none";
+  document.getElementById("yinput").style.display = "none";
+
   var height = document.getElementById("height");
   height.addEventListener("input", updateFigureFromInput);
   var width = document.getElementById("width");
@@ -88,7 +97,6 @@ function mouseClicked() {
       let cornerRadius = 1;
       let cuadrado = new Square(x, y, width, height, color, borderColor, opacity, strokeWeight, opacity, cornerRadius);
       cuadrado.name = "Cuadrado";
-
       shapes.push(cuadrado);
       cuadrado.display(); // Llamar a la función display() para dibujar el cuadrado en el lienzo
       updateElementsList();
@@ -113,7 +121,6 @@ function mouseClicked() {
     if (isDrawingLine) {
       lineEndX = mouseX;
       lineEndY = mouseY;
-      isDrawingLine = false;
       let borderColor = [0, 0, 0];
       let opacityBorder = 255;
       let strokeWeight = 10;
@@ -152,11 +159,14 @@ function updateSidebar() {
   cornerRadius.addEventListener("input", updateFigureFromInput);
 
   if (selectedShape instanceof Square) {
+    document.getElementById("xinput").style.display = "block";
+    document.getElementById("yinput").style.display = "block";
     document.getElementById("CUADRADO").style.display = "block";
     document.getElementById("TEXTO").style.display = "none";
     document.getElementById("FIGURA1").style.display = "block";
     document.getElementById("FIGURA2").style.display = "block";
     document.getElementById("FIGURA3").style.display = "block";
+    document.getElementById("FIGURA4").style.display = "block";
     let heightInput = selectedShape.height;
     let widthInput = selectedShape.width;
     cornerRadius.value = selectedShape.cornerRadius;
@@ -184,9 +194,12 @@ function updateSidebar() {
   if (selectedShape instanceof Circle) {
     document.getElementById("TEXTO").style.display = "none";
     document.getElementById("CUADRADO").style.display = "none";
+    document.getElementById("xinput").style.display = "block";
+    document.getElementById("yinput").style.display = "block";
     document.getElementById("FIGURA1").style.display = "block";
     document.getElementById("FIGURA2").style.display = "block";
     document.getElementById("FIGURA3").style.display = "block";
+    document.getElementById("FIGURA4").style.display = "block";
     let heightInput = selectedShape.height;
     let widthInput = selectedShape.width;
     height.value = heightInput;
@@ -216,6 +229,8 @@ function updateSidebar() {
     document.getElementById("FIGURA4").style.display = "block";
     document.getElementById("CUADRADO").style.display = "none";
     document.getElementById("TEXTO").style.display = "block";
+    document.getElementById("xinput").style.display = "block";
+    document.getElementById("yinput").style.display = "block";
     y.value = selectedShape.y;
     x.value = selectedShape.x;
     texto.value = selectedShape.textString;
@@ -234,12 +249,13 @@ function updateSidebar() {
     document.getElementById("FIGURA2").style.display = "none";
     document.getElementById("FIGURA3").style.display = "block";
     document.getElementById("FIGURA4").style.display = "none";
+    document.getElementById("xinput").style.display = "block";
+    document.getElementById("yinput").style.display = "block";
     y.value = selectedShape.y;
     x.value = selectedShape.x;
     width.value = selectedShape.width;
     bordeTamaño.value = selectedShape.strokeWeight;
     opacidadBorde.value = selectedShape.opacityBorder;
-    borderColor.value =selectedShape.borderColor;
 
     if (selectedShape.borderColor) {
       let rgb = hexToRgb(selectedShape.borderColor);
@@ -307,11 +323,9 @@ function updateFigureFromInput() {
       selectedShape.color = [rgb.r, rgb.g, rgb.b];
     }
     if (borderColor) {
-        let rgb = hexToRgb(selectedShape.borderColor);
-        let hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
-        borderColor.value = hexColor;
+      let rgb = hexToRgb(borderColor);
+      selectedShape.borderColor = [rgb.r, rgb.g, rgb.b];
     }
-    
   }
   if (selectedShape instanceof Linea) {
     let xInput = parseFloat(document.getElementById("Xpos").value);
@@ -322,12 +336,10 @@ function updateFigureFromInput() {
     let borderColor = document.getElementById("Bordecolor").value;
   
     if (!isNaN(xInput)) {
-      selectedShape.x1 = xInput;
-      selectedShape.x2 = xInput;
+      selectedShape.x = xInput;
     }
     if (!isNaN(yInput)) {
-      selectedShape.y1 = yInput;
-      selectedShape.y1 = yInput;
+      selectedShape.y = yInput;
     }
     if (!isNaN(widthInput)) {
       selectedShape.width = widthInput;
@@ -426,6 +438,7 @@ function addText() {
 class Circle extends Shape {
   constructor(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder) {
     super(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder);
+    this.opacity = opacity;
   }
 
   display() {
@@ -442,12 +455,14 @@ class Circle extends Shape {
 }
 class Linea extends Shape {
   constructor(x1, y1, x2, y2, borderColor, opacityBorder, strokeWeight) {
-    super(x1, y1, x2 - x1, y2 - y1, borderColor, opacityBorder);
+    super(x1, y1, x2 - x1, y2 - y1);
+    this.borderColor = borderColor;
+    this.opacityBorder = opacityBorder;
     this.strokeWeight = strokeWeight;
   }
   display() {
-    strokeWeight(this.strokeWeight);
     stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacityBorder);
+    strokeWeight(this.strokeWeight);
     ddaLine(this.x, this.y, this.x2, this.y2);
   }
   contains(x, y) {
@@ -678,8 +693,8 @@ function updateElementsList() {
     shapeName.innerText = shape.name;
     listItem.appendChild(shapeName);
 
-    // Insertar el elemento al inicio de la lista
-    sidebarElements.insertBefore(listItem, sidebarElements.firstChild);
+    // Insertar el elemento al final de la lista
+    sidebarElements.appendChild(listItem);
   }
 }
 function toggleShapeVisibility(index) {
@@ -699,7 +714,6 @@ function toggleShapeVisibility(index) {
   }
 }
 function redrawCanvas() {
-
   // Dibujar todas las figuras que no están ocultas
   for (let i = 0; i < shapes.length; i++) {
     let shape = shapes[i];
@@ -794,8 +808,6 @@ function ddaLine(x1, y1, x2, y2) {
     y += yIncrement;
   }
 }
-
-// Función para capturar y guardar el lienzo
 function guardarCambios() {
   const lienzo = document.getElementById('canvas');
   const figurasJson = obtenerFigurasJson();
