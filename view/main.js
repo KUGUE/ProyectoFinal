@@ -69,12 +69,6 @@ function mouseClicked() {
         updateSidebar();
         break;
       }
-      if (shapes[i] instanceof Linea && shapes[i].contains(mouseX, mouseY)) {
-        selectedShape = shapes[i];
-        selectedText = null; // Reiniciar el objeto de texto seleccionado
-        updateSidebar();
-        break;
-      }
     }
 
     // Verificar si no se hizo clic en ninguna forma y se está arrastrando el mouse
@@ -120,13 +114,10 @@ function mouseClicked() {
       lineEndX = mouseX;
       lineEndY = mouseY;
       isDrawingLine = false;
-
-      let color = [0, 0, 0];
       let borderColor = [0, 0, 0];
-      let opacity = 255;
-      let strokeWeight = 1;
-
-      let linea = new Linea(lineStartX, lineStartY, lineEndX, lineEndY, color, borderColor, opacity, strokeWeight);
+      let opacityBorder = 255;
+      let strokeWeight = 10;
+      let linea = new Linea(lineStartX, lineStartY, lineEndX, lineEndY, borderColor, opacityBorder, strokeWeight);
       shapes.push(linea);
       linea.display(); // Llamar a la función display() para dibujar la línea en el lienzo
       updateElementsList();
@@ -222,6 +213,7 @@ function updateSidebar() {
     document.getElementById("FIGURA1").style.display = "none";
     document.getElementById("FIGURA2").style.display = "none";
     document.getElementById("FIGURA3").style.display = "none";
+    document.getElementById("FIGURA4").style.display = "block";
     document.getElementById("CUADRADO").style.display = "none";
     document.getElementById("TEXTO").style.display = "block";
     y.value = selectedShape.y;
@@ -241,17 +233,20 @@ function updateSidebar() {
     document.getElementById("FIGURA1").style.display = "none";
     document.getElementById("FIGURA2").style.display = "none";
     document.getElementById("FIGURA3").style.display = "block";
+    document.getElementById("FIGURA4").style.display = "none";
     y.value = selectedShape.y;
     x.value = selectedShape.x;
-    width.value = widthInput;
+    width.value = selectedShape.width;
     bordeTamaño.value = selectedShape.strokeWeight;
     opacidadBorde.value = selectedShape.opacityBorder;
+    borderColor.value =selectedShape.borderColor;
+
     if (selectedShape.borderColor) {
       let rgb = hexToRgb(selectedShape.borderColor);
       let hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
       borderColor.value = hexColor;
     }
-    }
+  }
 }
 function updateFigureFromInput() {
   if (selectedShape) {
@@ -312,9 +307,11 @@ function updateFigureFromInput() {
       selectedShape.color = [rgb.r, rgb.g, rgb.b];
     }
     if (borderColor) {
-      let rgb = hexToRgb(borderColor);
-      selectedShape.borderColor = [rgb.r, rgb.g, rgb.b];
+        let rgb = hexToRgb(selectedShape.borderColor);
+        let hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
+        borderColor.value = hexColor;
     }
+    
   }
   if (selectedShape instanceof Linea) {
     let xInput = parseFloat(document.getElementById("Xpos").value);
@@ -325,10 +322,12 @@ function updateFigureFromInput() {
     let borderColor = document.getElementById("Bordecolor").value;
   
     if (!isNaN(xInput)) {
-      selectedShape.x = xInput;
+      selectedShape.x1 = xInput;
+      selectedShape.x2 = xInput;
     }
     if (!isNaN(yInput)) {
-      selectedShape.y = yInput;
+      selectedShape.y1 = yInput;
+      selectedShape.y1 = yInput;
     }
     if (!isNaN(widthInput)) {
       selectedShape.width = widthInput;
@@ -442,20 +441,19 @@ class Circle extends Shape {
   }
 }
 class Linea extends Shape {
-  constructor(x1, y1, x2, y2, color, borderColor, opacity, strokeWeight) {
-    super(x1, y1, x2 - x1, y2 - y1, color, opacity, 0);
-    this.borderColor = borderColor;
+  constructor(x1, y1, x2, y2, borderColor, opacityBorder, strokeWeight) {
+    super(x1, y1, x2 - x1, y2 - y1, borderColor, opacityBorder);
     this.strokeWeight = strokeWeight;
   }
   display() {
     strokeWeight(this.strokeWeight);
-    stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacity);
+    stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacityBorder);
     ddaLine(this.x, this.y, this.x2, this.y2);
   }
   contains(x, y) {
     // Verificar si el punto (x, y) está cerca de la línea (dentro de un umbral de distancia)
     let threshold = 5;
-    let d = distPointToLine(x, y, this.x, this.y, this.x + this.width, this.y + this.height);
+    let d = distPointToLine(x, y, this.x, this.y, this.x2, this.y2);
     return d <= threshold;
   }
 }
@@ -573,7 +571,7 @@ function mousePressed() {
   if (isDrawingLine) {
     lineStartX = mouseX;
     lineStartY = mouseY;
-    linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [255, 255, 255], [255, 255, 255], 255, 10);
+    linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [255, 255, 255], 255, 10);
     linea.name = "Linea";
     shapes.push(linea);
     updateElementsList();
