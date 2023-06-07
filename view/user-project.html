@@ -54,18 +54,17 @@
                     Elementos
                 </h2>
                 <div class="col-12 mb-2 d-flex">
-                    <button class="nav-link main-btn" id="up" onclick="moveShapeDown()" type="button"
+                    <button class="nav-link main-btn" id="up" onclick="moveShapeUp()" type="button"
                         style="display: inline-block; width: 100%;">
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
-                    <button class="nav-link main-btn" onclick="moveShapeUp()" id="down" type="button"
+                    <button class="nav-link main-btn" onclick="moveShapeDown()" id="down" type="button"
                         style="display: inline-block; width: 100%;">
                         <i class="fa-solid fa-arrow-down"></i>
                     </button>
                 </div>
                 <!-- ROW -->
                 <div class="row">
-
                     <!-- COLUMN -->
                     <div class="col-12">
                         <div id="sidebar-elements"></div>
@@ -100,19 +99,19 @@
                         <div class="col-6 mb-2" id="FIGURA1">
                             <div class="d-flex justify-content-end">
                                 <label for="">H:</label>
-                                <input type="number" name="" id="height">
+                                <input min="0" type="number" name="" id="height">
                             </div>
                         </div>
                         <div class="col-6 mb-2" id="FIGURA2">
                             <div class="d-flex justify-content-end">
                                 <label for="">W:</label>
-                                <input type="number" name="" id="width">
+                                <input min="0"  type="number" name="" id="width">
                             </div>
                         </div>                       
                         <div class="col-6 mb-2" id="CUADRADO">
                             <div class="d-flex justify-content-end">
                                 <label for=""><img src="../public/images/rounded.png" alt=""></label>
-                                <input type="number" name="" id="cornerRadius">
+                                <input min="0" type="number" name="" id="cornerRadius">
                             </div>
                         </div>
                     </div>
@@ -131,7 +130,7 @@
                         <div class="col-12 ">
                             <div class="justify-content-end">
                                 <label for="">Opacidad:</label>
-                                <input type="number" name="" id="RellenoOpacidad" class="">
+                                <input min="0" type="number" name="" id="RellenoOpacidad" class="">
                             </div>
                         </div>
                     </div>
@@ -154,12 +153,12 @@
                         <!-- INPUT "GROSOR" -->
                         <div class="col-12 mb-2">
                             <label for="">Grosor:</label>
-                            <input type="number" name="" id="Bordegrosor" class="ms-2">
+                            <input min="0" type="number" name="" id="Bordegrosor" class="ms-2">
                         </div>
                         <!-- INPUT "GROSOR" -->
                         <div class="col-12 mb-2">
                             <label for="">Opacidad:</label>
-                            <input type="number" name="" id="Bordeopacidad" class="ms-2">
+                            <input min="0" type="number" name="" id="Bordeopacidad" class="ms-2">
                         </div>
                     </div><!-- end row -->
                 </div><!-- end filled -->
@@ -189,6 +188,7 @@
             </form>            
 </body>
 <script src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
 
 </html>

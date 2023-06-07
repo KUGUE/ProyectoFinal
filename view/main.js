@@ -2,15 +2,14 @@ let shapes = [];
 let selectedShape = null;
 let bandera = false;
 let selectedText = null;
-let lineStartX = 0;
-let lineStartY = 0;
-let lineEndX = 0;
-let lineEndY = 0;
 let isDrawingSquare = false;
 let isDrawingCircle = false;
 let isDrawingLine = false;
 let circle = null;
 let line = null;
+let isDrawing = false;
+let lineStartX, lineStartY, endX, endY;
+
 
 function deselectShape() {
   selectedShape = null;
@@ -76,7 +75,7 @@ function mouseClicked() {
     if (!selectedShape && !selectedText && isDrawingLine === true && isDrawingSquare === true) {
       lineEndX = mouseX;
       lineEndY = mouseY;
-  
+    }
       if (isDrawingSquare) {
         let x = lineStartX;
         let y = lineStartY;
@@ -102,8 +101,9 @@ function mouseClicked() {
         let color = [255, 255, 255];
         let borderColor = [0, 0, 0];
         let opacity = 255;
+        let opacityBorder = 255;
         let strokeWeight = 1;
-        let circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacity);
+        let circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacityBorder);
         circle.name = "Círculo";
 
         shapes.push(circle);
@@ -128,7 +128,7 @@ function mouseClicked() {
     }
 
   }
-}
+
 function updateSidebar() {
   var height = document.getElementById("height");
   height.addEventListener("input", updateFigureFromInput);
@@ -188,6 +188,9 @@ function updateSidebar() {
   if (selectedShape instanceof Circle) {
     document.getElementById("TEXTO").style.display = "none";
     document.getElementById("CUADRADO").style.display = "none";
+    document.getElementById("FIGURA1").style.display = "block";
+    document.getElementById("FIGURA2").style.display = "block";
+    document.getElementById("FIGURA3").style.display = "block";
     let heightInput = selectedShape.height;
     let widthInput = selectedShape.width;
     height.value = heightInput;
@@ -388,29 +391,30 @@ class Circle extends Shape {
     return d <= this.height;
   }
 }
-
 class Linea extends Shape {
-  constructor(x1, y1, x2, y2, color, borderColor, opacity, strokeWeight, opacityBorder) {
-    super(x1, y1, Math.abs(x2 - x1), Math.abs(y2 - y1), color, borderColor, opacity, strokeWeight, opacityBorder);
-    this.startX = x1;
-    this.startY = y1;
-    this.endX = x2;
-    this.endY = y2;
+  constructor(x1, y1, x2, y2, color, borderColor, opacity, strokeWeight) {
+    super(x1, y1, x2 - x1, y2 - y1, color, opacity, 0);
+    this.borderColor = borderColor;
+    this.strokeWeight = strokeWeight;
   }
-
   display() {
     strokeWeight(this.strokeWeight);
     stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacity);
-    line(this.startX, this.startY, this.endX, this.endY); // Agregar esta línea para dibujar la línea
+    ddaLine(lineStartX, lineStartY, lineEndX, lineEndY);
   }
-
   contains(x, y) {
-    return false;
+    // Verificar si el punto (x, y) está cerca de la línea (dentro de un umbral de distancia)
+    let threshold = 5;
+    let d = distPointToLine(x, y, this.x, this.y, this.x + this.width, this.y + this.height);
+    return d <= threshold;
   }
 }
 
 function mouseDragged() {
   updateSidebar();
+  if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+    return; // Salir de la función si el mouse está fuera del canvas
+  }
   if (selectedShape && bandera === true && isDrawingSquare === false) {
     selectedShape.x = mouseX;
     selectedShape.y = mouseY;
@@ -436,29 +440,12 @@ function mouseDragged() {
     circle.height = radius;
     updateElementsList();
   }
-   if (isDrawingLine) {
-    if (lineStartX === 0 && lineStartY === 0) {
-      // Capturar las coordenadas de inicio
-      lineStartX = mouseX;
-      lineStartY = mouseY;
-    } else {
-      // Capturar las coordenadas de fin
-      lineEndX = mouseX;
-      lineEndY = mouseY;
-      
-      // Crear la línea y agregarla a las formas
-      let line = new Linea(lineStartX, lineStartY, lineEndX, lineEndY, [0, 0, 0], [0, 0, 0], 255, 10, 255, 10);
-      line.name = "Línea";
-      shapes.push(line);
-      updateElementsList();
-
-      // Restablecer las coordenadas y el estado
-      lineStartX = 0;
-      lineStartY = 0;
-      lineEndX = 0;
-      lineEndY = 0;
-      isDrawingLine = false;
-    }
+  if (isDrawingLine && line) {
+    lineEndX = mouseX;
+    lineEndY = mouseY;
+    linea.x2 = lineEndX; // Actualiza las coordenadas finales de la línea
+    linea.y2 = lineEndY;
+    updateElementsList();
   }
 }
 function draw() {
@@ -480,6 +467,11 @@ function draw() {
     circle.radius = circleRadius;
     circle.display();
   }
+
+  if (isDrawing) {
+    line(lineStartX, lineStartY, lineEndX, lineEndY);
+  }
+
   for (let shape of shapes) {
     shape.display();
   }
@@ -495,12 +487,14 @@ function pintarLineas() {
 function pintarCuadrados(){
   bandera = false;
   isDrawingSquare = true;
+  isDrawingLine = false;
   isDrawingCircle = false;
 }
 function pintarCirculos(){
   bandera = false;
   isDrawingSquare = false;
   isDrawingCircle = true;
+  isDrawingLine = false;
 }
 function seleccionar() {
   bandera = true;
@@ -524,19 +518,32 @@ function mousePressed() {
     shapes.push(circle);
     updateElementsList();
   }
-  if (isDrawingLine){
+  if (isDrawingLine) {
     lineStartX = mouseX;
     lineStartY = mouseY;
-   
+    linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [255, 255, 255], [255, 255, 255],255,10);
+    linea.name = "Linea";
+    updateElementsList();
   }
 }
 function mouseReleased() {
+    // Guardar las coordenadas finales de la línea y finalizar el dibujo
+    if (isDrawingLine && linea) {
+      lineEndX = mouseX;
+      lineEndY = mouseY;
+      linea.x2 = lineEndX; // Actualiza las coordenadas finales de la línea
+      linea.y2 = lineEndY;
+      shapes.push(linea);
+      linea = null; // Restablece la variable linea a null para poder crear una nueva instancia en el próximo dibujo
+      updateElementsList();
+
+    }
   isDrawingSquare = false;
   isDrawingCircle = false;
   isDrawingLine = false;
   square = null;
   circle = null;
-  line = null;
+  linea = null;
 }
 function setup() {
   let canvas = createCanvas(1450, 950);
@@ -600,7 +607,7 @@ function updateElementsList() {
   var sidebarElements = document.getElementById("sidebar-elements");
   sidebarElements.innerHTML = ""; // Limpiar la lista de elementos existente
 
-  for (let i = 0; i < shapes.length; i++) {
+  for (let i = shapes.length - 1; i >= 0; i--) {
     let shape = shapes[i];
 
     // Crear un elemento de lista para cada figura
@@ -617,7 +624,8 @@ function updateElementsList() {
     shapeName.innerText = shape.name;
     listItem.appendChild(shapeName);
 
-    sidebarElements.appendChild(listItem);
+    // Insertar el elemento al inicio de la lista
+    sidebarElements.insertBefore(listItem, sidebarElements.firstChild);
   }
 }
 function toggleShapeVisibility(index) {
@@ -683,4 +691,52 @@ function swapShapes(indexA, indexB) {
   shapes[indexB] = temp;
   updateSidebar();
   updateElementsList();
+}
+function distPointToLine(x, y, x1, y1, x2, y2) {
+  let A = x - x1;
+  let B = y - y1;
+  let C = x2 - x1;
+  let D = y2 - y1;
+
+  let dot = A * C + B * D;
+  let lenSq = C * C + D * D;
+  let param = dot / lenSq;
+
+  let xx, yy;
+
+  if (param < 0) {
+    xx = x1;
+    yy = y1;
+  } else if (param > 1) {
+    xx = x2;
+    yy = y2;
+  } else {
+    xx = x1 + param * C;
+    yy = y1 + param * D;
+  }
+
+  let dx = x - xx;
+  let dy = y - yy;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function ddaLine(x1, y1, x2, y2) {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let steps = Math.max(Math.abs(dx), Math.abs(dy));
+
+  let xIncrement = dx / steps;
+  let yIncrement = dy / steps;
+
+  let x = x1;
+  let y = y1;
+
+  for (let i = 0; i <= steps; i++) {
+    // Dibujar el pixel en la posición (x, y)
+    stroke(0);
+    point(x, y);
+
+    // Actualizar las coordenadas (x, y)
+    x += xIncrement;
+    y += yIncrement;
+  }
 }
