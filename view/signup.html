@@ -34,7 +34,7 @@
         <div class="main-banner d-flex justify-content-center align-items-center p-5">
             <div class="container d-flex justify-content-center align-items-center w-100 h-100">
                 <div class="card-login p-4">
-                    <form action="Loguearse.php" method="post">
+                    <form action="Loguearse.php" method="post" oninput='repeat_password.setCustomValidity(repeat_password.value != password.value ? "Las contraseñas no coinciden." : "")'>
                         <h1 class="mb-4">
                             REGISTRARSE
                         </h1>
