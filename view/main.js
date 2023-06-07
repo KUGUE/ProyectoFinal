@@ -295,6 +295,9 @@ function updateFigureFromInput() {
       selectedShape.height = height;
       selectedShape.width = width;
     }
+
+
+
     if (selectedShape instanceof TextShape) {
 
       selectedShape.fontSize = parseFloat(tamañotexto);
@@ -305,6 +308,7 @@ function updateFigureFromInput() {
       }
       updateSidebar();
     }
+
     if (!isNaN(opacidad)) {
       selectedShape.opacity = opacidad;
     }
@@ -326,34 +330,6 @@ function updateFigureFromInput() {
       selectedShape.borderColor = [rgb.r, rgb.g, rgb.b];
     }
   }
-  if (selectedShape instanceof Linea) {
-    let xInput = parseFloat(document.getElementById("Xpos").value);
-    let yInput = parseFloat(document.getElementById("Ypos").value);
-    let widthInput = parseFloat(document.getElementById("width").value);
-    let bordeTamaño = parseFloat(document.getElementById("Bordegrosor").value);
-    let opacidadBorde = parseFloat(document.getElementById("Bordeopacidad").value);
-    let borderColor = document.getElementById("Bordecolor").value;
-  
-    if (!isNaN(xInput)) {
-      selectedShape.x = xInput;
-    }
-    if (!isNaN(yInput)) {
-      selectedShape.y = yInput;
-    }
-    if (!isNaN(widthInput)) {
-      selectedShape.width = widthInput;
-    }
-    if (!isNaN(bordeTamaño)) {
-      selectedShape.strokeWeight = bordeTamaño;
-    }
-    if (!isNaN(opacidadBorde)) {
-      selectedShape.opacityBorder = opacidadBorde;
-    }
-    if (borderColor) {
-      let rgb = hexToRgb(borderColor);
-      selectedShape.borderColor = [rgb.r, rgb.g, rgb.b];
-    }
-  }
   updateSidebar();
 }
 class Shape {
@@ -367,7 +343,7 @@ class Shape {
     this.strokeWeight = 1;
     this.color = color;
     this.fontSize = fontSize;
-    this.borderColor = '#ffffff';
+    this.borderColor = '#000000';
     this.cornerRadius = 1;
   }
 }
@@ -437,13 +413,14 @@ function addText() {
 class Circle extends Shape {
   constructor(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder) {
     super(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder);
+    this.borderColor = borderColor;
     this.opacity = opacity;
   }
 
   display() {
+    stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacityBorder);
     fill(this.color[0], this.color[1], this.color[2], this.opacity);
     strokeWeight(this.strokeWeight);
-    stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacityBorder);
     ellipse(this.x + this.width / 2, this.y + this.height / 2, this.width, this.height);
   }
 
@@ -585,7 +562,7 @@ function mousePressed() {
   if (isDrawingLine) {
     lineStartX = mouseX;
     lineStartY = mouseY;
-    linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [255, 255, 255], 255, 10);
+    linea = new Linea(lineStartX, lineStartY, mouseX, mouseY, [0, 0, 0], 25, 10);
     linea.name = "Linea";
     shapes.push(linea);
     updateElementsList();
@@ -839,7 +816,6 @@ function guardarCambios() {
 }
 const guardarCambiosButton = document.getElementById('guardarButton');
 
-// Agregar un evento de clic al botón "GUARDAR CAMBIOS"
 guardarCambiosButton.addEventListener('click', function () {
   // Obtener los datos del lienzo y las figuras en JSON
   const lienzo = document.getElementById('canvas');
