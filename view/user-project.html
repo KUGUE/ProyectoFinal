@@ -42,8 +42,12 @@
                 </div>
             </div>
             <div class="project-save   d-flex ">
+                <div class="d-flex justify-content-end">
+                    <label for="">NOMBRE DEL PROYECTO :</label>
+                    <input min="0" type="text" name="" id="nombreProyectoInput">
+                </div>
                 <a class="main-btn save-btn px-3 align-right" href="user-designs.php">MIS PROYECTOS</a>
-                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#">GUARDAR CAMBIOS</a>
+                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#" onclick="guardarCambios()">GUARDAR CAMBIOS</a>
             </div>
         </div>
 
@@ -73,7 +77,7 @@
             </div>
 
             <!-- CANVAS AREA -->
-            <div class="area-canvas">
+            <div class="canvas">
                 <div id="sidebar"></div>
             </div>
             <!-- SIDEBAR OPTIONS -->
