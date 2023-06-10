@@ -15,14 +15,14 @@
 <body>
     <nav id="header" class="navbar navbar-expand-lg navbar-dark text-white bgcolor-secondary">
         <div class="container">
-            <a class="navbar-brand d-flex" href="../index.html">
+            <a class="navbar-brand d-flex" href="../index.php">
                 <img src="../public/images/logo.png" height="60" alt="asd">
             </a>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav navbar-options">
-                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="login.html">Iniciar sesión</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="signup.html">Registrarse</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="login.php">Iniciar sesión</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="signup.php">Registrarse</a></li>
                 </ul>
             </div>
         </div>

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../public/libs/fontawesome/css/all.min.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../public/css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
 </head>
 
 <body class="user-project">
@@ -47,7 +49,8 @@
                     <input min="0" type="text" name="" id="nombreProyectoInput">
                 </div>
                 <a class="main-btn save-btn px-3 align-right" href="user-designs.php">MIS PROYECTOS</a>
-                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#" onclick="guardarCambios()">GUARDAR CAMBIOS</a>
+                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#"
+                    onclick="guardarCambios()">GUARDAR CAMBIOS</a>
             </div>
         </div>
 
@@ -83,12 +86,16 @@
             <!-- SIDEBAR OPTIONS -->
             <div class="sidebar-options bgcolor-tertiary">
                 <div class="measures px-2 mb-0">
-                    <!-- TITLE -->
-                    <h2 class="text-center px-2 my-3">
-                        Medidas
-                    </h2>
+                    <div class="col-6 mb-2" id="medidas">
+                        <h2 class="text-center px-2 my-3">
+                            Medidas
+                        </h2>
+                    </div>
                     <div class="row justify-content-center px-2 m-0">
+
+
                         <div class="col-6 mb-2" id="xinput">
+
                             <div class="d-flex justify-content-end">
                                 <label for="">X:</label>
                                 <input type="number" name="" id="Xpos" class="ms-2">
@@ -109,9 +116,9 @@
                         <div class="col-6 mb-2" id="FIGURA2">
                             <div class="d-flex justify-content-end">
                                 <label for="">W:</label>
-                                <input min="0"  type="number" name="" id="width">
+                                <input min="0" type="number" name="" id="width">
                             </div>
-                        </div>                       
+                        </div>
                         <div class="col-6 mb-2" id="CUADRADO">
                             <div class="d-flex justify-content-end">
                                 <label for=""><img src="../public/images/rounded.png" alt=""></label>
@@ -188,11 +195,10 @@
                     </div><!-- end row -->
                 </div><!-- end filled -->
             </div>
-            </div>
-            </form>            
+        </div>
+    </form>
 </body>
 <script src="main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+
 
 </html>

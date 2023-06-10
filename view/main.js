@@ -10,10 +10,47 @@ let line = null;
 let lineStartX, lineStartY, endX, endY;
 
 
+
+function setup() {
+  let canvas = createCanvas(1450, 950);
+  canvas.parent("sidebar");
+  canvas.mousePressed(canvasMouseClicked);
+}
+function draw() {
+  background(100);
+  // Dibujar todas las formas
+  if (isDrawingSquare && square) {
+    let squareWidth = mouseX - lineStartX;
+    let squareHeight = mouseY - lineStartY;
+    square.width = squareWidth;
+    square.height = squareHeight;
+    square.display();
+  }
+  if (isDrawingCircle && circle) {
+    let circleRadius = dist(lineStartX, lineStartY, mouseX, mouseY) / 2;
+    let circleX = lineStartX;
+    let circleY = lineStartY;
+    circle.x = circleX;
+    circle.y = circleY;
+    circle.radius = circleRadius;
+    circle.display();
+  }
+
+  if (isDrawingLine && linea) {
+    linea.x2 = mouseX;
+    linea.y2 = mouseY;
+    updateElementsList();
+  }
+
+  for (let shape of shapes) {
+    shape.display();
+  }
+}
 function deselectShape() {
   
   selectedShape = null;
   updateSidebar();
+  document.getElementById("medidas").style.display = "none";
   document.getElementById("TEXTO").style.display = "none";
   document.getElementById("CUADRADO").style.display = "none";
   document.getElementById("FIGURA1").style.display = "none";
@@ -81,7 +118,7 @@ function mouseClicked() {
     }
 
     // Verificar si no se hizo clic en ninguna forma y se está arrastrando el mouse
-    if (!selectedShape && !selectedText && isDrawingLine === true && isDrawingSquare === true) {
+    if (!selectedShape && !selectedText && !isDrawingLine && isDrawingSquare === true) {
       lineEndX = mouseX;
       lineEndY = mouseY;
     }
@@ -158,7 +195,8 @@ function updateSidebar() {
   var cornerRadius = document.getElementById("cornerRadius");
   cornerRadius.addEventListener("input", updateFigureFromInput);
 
-  if (selectedShape instanceof Square) {
+  if (selectedShape instanceof Square && bandera === true) {
+    document.getElementById("medidas").style.display = "block";
     document.getElementById("xinput").style.display = "block";
     document.getElementById("yinput").style.display = "block";
     document.getElementById("CUADRADO").style.display = "block";
@@ -191,7 +229,8 @@ function updateSidebar() {
       borderColor.value = hexColor;
     }
   }
-  if (selectedShape instanceof Circle) {
+  if (selectedShape instanceof Circle&& bandera === true) {
+    document.getElementById("medidas").style.display = "block";
     document.getElementById("TEXTO").style.display = "none";
     document.getElementById("CUADRADO").style.display = "none";
     document.getElementById("xinput").style.display = "block";
@@ -221,7 +260,8 @@ function updateSidebar() {
       borderColor.value = hexColor;
     }
   }
-  if (selectedShape instanceof TextShape) {
+  if (selectedShape instanceof TextShape && bandera === true) {
+    document.getElementById("medidas").style.display = "block";
     document.getElementById("FIGURA1").style.display = "none";
     document.getElementById("FIGURA2").style.display = "none";
     document.getElementById("FIGURA3").style.display = "none";
@@ -241,7 +281,8 @@ function updateSidebar() {
       color.value = hexColor;
     }
   }
-  if (selectedShape instanceof Linea) {
+  if (selectedShape instanceof Linea&& bandera === true) {
+    document.getElementById("medidas").style.display = "block";
     document.getElementById("TEXTO").style.display = "none";
     document.getElementById("CUADRADO").style.display = "none";
     document.getElementById("FIGURA1").style.display = "none";
@@ -255,7 +296,7 @@ function updateSidebar() {
     width.value = selectedShape.width;
     bordeTamaño.value = selectedShape.strokeWeight;
     opacidadBorde.value = selectedShape.opacityBorder;
-
+    borderColor.value = selectedShape.borderColor;
     if (selectedShape.borderColor) {
       let rgb = hexToRgb(selectedShape.borderColor);
       let hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
@@ -277,6 +318,9 @@ function updateFigureFromInput() {
     var color = document.getElementById("RellenoColor").value;
     var tamañotexto = document.getElementById("tamañotexto").value;
     let cornerRadius = parseFloat(document.getElementById("cornerRadius").value);
+    if (selectedShape instanceof Linea) {
+      selectedShape.display();
+    }
     if (!isNaN(cornerRadius)) {
       selectedShape.cornerRadius = cornerRadius;
     }
@@ -295,9 +339,6 @@ function updateFigureFromInput() {
       selectedShape.height = height;
       selectedShape.width = width;
     }
-
-
-
     if (selectedShape instanceof TextShape) {
 
       selectedShape.fontSize = parseFloat(tamañotexto);
@@ -345,6 +386,7 @@ class Shape {
     this.fontSize = fontSize;
     this.borderColor = '#000000';
     this.cornerRadius = 1;
+    this.visible = true;
   }
 }
 class Square extends Shape {
@@ -352,15 +394,17 @@ class Square extends Shape {
     super(x, y, width, height, color, opacity, opacityBorder, cornerRadius);
     this.borderColor = borderColor;
     this.strokeWeight = strokeWeight;
+    this.visible = true; 
   }
 
   display() {
+    if (this.visible === true) {
     strokeWeight(this.strokeWeight);
     stroke(this.borderColor[0], this.borderColor[1], this.borderColor[2], this.opacityBorder);
     fill(this.color[0], this.color[1], this.color[2], this.opacity);
     rect(this.x, this.y, this.width, this.height, this.cornerRadius);
   }
-
+}
   contains(x, y) {
     return (
       x >= this.x &&
@@ -425,8 +469,8 @@ class Circle extends Shape {
   }
 
   contains(x, y) {
-    let d = dist(x, y, this.x, this.y);
-    return d <= this.height;
+    let d = dist(x, y, this.x + this.width / 2, this.y + this.height / 2);
+    return d <= this.width / 2;
   }
 }
 class Linea extends Shape {
@@ -448,13 +492,12 @@ class Linea extends Shape {
     return d <= threshold;
   }
 }
-
 function mouseDragged() {
   updateSidebar();
   if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
     return; // Salir de la función si el mouse está fuera del canvas
   }
-  if (selectedShape && bandera === true && isDrawingSquare === false) {
+  if (selectedShape && bandera === true ) {
     selectedShape.x = mouseX;
     selectedShape.y = mouseY;
   }
@@ -487,36 +530,6 @@ function mouseDragged() {
     updateElementsList();
   }
 }
-function draw() {
-  background(100);
-  // Dibujar todas las formas
-  if (isDrawingSquare && square) {
-    let squareWidth = mouseX - lineStartX;
-    let squareHeight = mouseY - lineStartY;
-    square.width = squareWidth;
-    square.height = squareHeight;
-    square.display();
-  }
-  if (isDrawingCircle && circle) {
-    let circleRadius = dist(lineStartX, lineStartY, mouseX, mouseY) / 2;
-    let circleX = lineStartX;
-    let circleY = lineStartY;
-    circle.x = circleX;
-    circle.y = circleY;
-    circle.radius = circleRadius;
-    circle.display();
-  }
-
-  if (isDrawingLine && linea) {
-    linea.x2 = mouseX;
-    linea.y2 = mouseY;
-    updateElementsList();
-  }
-
-  for (let shape of shapes) {
-    shape.display();
-  }
-}
 function pintarLineas() {
   bandera = false;
   isDrawingSquare = false;
@@ -530,12 +543,14 @@ function pintarCuadrados() {
   isDrawingSquare = true;
   isDrawingLine = false;
   isDrawingCircle = false;
+  selectedShape = null;
 }
 function pintarCirculos() {
   bandera = false;
   isDrawingSquare = false;
   isDrawingCircle = true;
   isDrawingLine = false;
+  selectedShape = null;
 }
 function seleccionar() {
   bandera = true;
@@ -583,11 +598,6 @@ function mouseReleased() {
   square = null;
   circle = null;
   linea = null;
-}
-function setup() {
-  let canvas = createCanvas(1450, 950);
-  canvas.parent("sidebar");
-  canvas.mousePressed(canvasMouseClicked);
 }
 function canvasMouseClicked() {
   // Verificar si se hizo clic dentro del lienzo
@@ -647,6 +657,22 @@ function componentToHex(c) {
   // Convierte un componente de color decimal a formato hexadecimal
   let hex = c.toString(16).padStart(2, "0");
   return hex;
+}
+
+function toggleShapeVisibility(index) {
+  shapes[index].visible = !shapes[index].visible;
+
+  // Función para ocultar una figura específica
+function hideShape(shape) {
+  shape.visible = false;
+}
+
+// Función para mostrar una figura específica
+function showShape(shape) {
+  shape.visible = true;
+}
+
+  updateElementsList();
 }
 function updateElementsList() {
   var sidebarElements = document.getElementById("sidebar-elements");
@@ -827,7 +853,6 @@ guardarCambiosButton.addEventListener('click', function () {
   formData.append('usuario_id', 9); // Reemplaza con el ID del usuario
   formData.append('imagen_proyecto', lienzo.toDataURL()); // Convertir el lienzo a imagen y adjuntarlo
   formData.append('figuras_json', JSON.stringify(figurasJson)); // Convertir el JSON de las figuras a cadena
-
   // Crear una solicitud AJAX
   const xhr = new XMLHttpRequest();
   xhr.open('POST', 'proyectos.php'); // Reemplaza con la ruta al script que procesará la solicitud

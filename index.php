@@ -15,7 +15,7 @@
 <body>
     <nav id="header" class="navbar navbar-expand-lg navbar-dark text-white bgcolor-secondary">
         <div class="container">
-            <a class="navbar-brand d-flex" href="index.html">
+            <a class="navbar-brand d-flex" href="index.php">
                 <img src="public/images/logo.png" height="60" alt="asd">
             </a>
             <a class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -24,9 +24,9 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav navbar-options">
-                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="view/login.html">Iniciar
+                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="view/login.php">Iniciar
                             sesión</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="view/signup.html">Registrarse</a>
+                    <li class="nav-item"><a class="nav-link px-3 my-3 main-btn" href="view/signup.php">Registrarse</a>
                     </li>
                 </ul>
             </div>

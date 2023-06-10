@@ -5,7 +5,7 @@ include("con_db.php");
 
 $_SESSION['activo'];
 if (isset($_POST['login_enter'])) {
-  loguearse();
+   loguearse();
 
 }
 if (isset($_POST['register_enter'])) {
@@ -17,7 +17,7 @@ if (isset($_POST['register_enter'])) {
 
 function loguearse()
 {
-    echo ("se intento ");
+   echo ("se intento ");
    $inc = include("con_db.php");
    if ($inc) {
       $correo = $_POST['email'];
@@ -27,10 +27,10 @@ function loguearse()
       $resultado = mysqli_query($conex, $consulta);
       $filas = mysqli_num_rows($resultado);
       if ($filas) {
-echo ("si entro ");
+         echo ("si entro ");
          header("Location: user-designs.php");
       } else {
-         header("Location: login.html");
+         header("Location: login.php");
          echo "No entraste guapo";
       }
    }
@@ -43,8 +43,8 @@ function register()
    if ($_POST['password'] === $password_re) {
       if (
          strlen($_POST['password']) >= 1 && strlen($_POST['repeat_password']) >= 1 && strlen($_POST['email'])
-         >= 1 && strlen($_POST['username']))
-       {
+         >= 1 && strlen($_POST['username'])
+      ) {
          $nombre = $_POST['username'];
          $correo_elec = $_POST['email'];
          $password_one = $_POST['password'];
@@ -55,12 +55,10 @@ function register()
             header("Location: login.html");
          }
 
+      } else {
+         header("Location: signup.php");
       }
-      else{
-         header("Location: signup.html");
-      }
-   }
-   else{
-      header("Location: signup.html");
+   } else {
+      header("Location: signup.php");
    }
 }
