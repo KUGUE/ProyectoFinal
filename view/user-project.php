@@ -49,8 +49,7 @@
                     <input min="0" type="text" name="" id="nombreProyectoInput">
                 </div>
                 <a class="main-btn save-btn px-3 align-right" href="user-designs.php">MIS PROYECTOS</a>
-                <a class="main-btn save-btn px-3 align-right" id="saveButton" href="#"
-                    onclick="guardarCambios()">GUARDAR CAMBIOS</a>
+                <a class="main-btn save-btn px-3 align-right" id="guardarButton" href="#">GUARDAR CAMBIOS</a>
             </div>
         </div>
 
@@ -199,6 +198,6 @@
     </form>
 </body>
 <script src="main.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </html>

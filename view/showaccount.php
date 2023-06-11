@@ -10,5 +10,6 @@
     while ($alumnosFila = $busqueda->fetch_assoc()) {
         $nombre1 = $alumnosFila['nombre'];
         $correo3 = $alumnosFila['correo'];
+        $id  = $alumnosFila['id'];
     }
 

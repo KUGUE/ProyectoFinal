@@ -9,7 +9,7 @@ let circle = null;
 let line = null;
 let lineStartX, lineStartY, endX, endY;
 
-
+document.getElementById('guardarButton').addEventListener('click', capturarLienzoYGuardar);
 
 function setup() {
   let canvas = createCanvas(1450, 950);
@@ -658,7 +658,6 @@ function componentToHex(c) {
   let hex = c.toString(16).padStart(2, "0");
   return hex;
 }
-
 function toggleShapeVisibility(index) {
   shapes[index].visible = !shapes[index].visible;
 
@@ -810,57 +809,110 @@ function ddaLine(x1, y1, x2, y2) {
     y += yIncrement;
   }
 }
-function guardarCambios() {
-  const lienzo = document.getElementById('canvas');
-  const figurasJson = obtenerFigurasJson();
-  let imagenDataURL = 'public/images/background.png'; // Ruta de la imagen por defecto
-  let nombreProyecto = document.getElementById('nombreProyectoInput').value;
 
-  if (nombreProyecto === null || nombreProyecto.trim() === '') {
-    // Nombre de proyecto nulo o vacío, asignar nombre por defecto
-    nombreProyecto = 'Nombre del Proyecto';
-  }
-
-  const formData = new FormData();
-  formData.append('nombre_proyecto', nombreProyecto);
-  formData.append('usuario_id', 9);
-  formData.append('imagen_proyecto', imagenDataURL);
-  formData.append('figuras_json', JSON.stringify(figurasJson));
-
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'proyectos.php'); // Reemplaza 'guardar_proyecto.php' con la ruta al script que guardará los datos
-
-  xhr.addEventListener('load', function () {
-    if (xhr.status === 200) {
-      console.log(xhr.responseText); // Mensaje de respuesta del servidor
-    } else {
-      console.log('Error al guardar el proyecto.');
-    }
-  });
-
-  xhr.send(formData);
+function capturarLienzoYGuardar() {
+  // Capturar el lienzo en un objeto p5.Image
+  const imagenLienzo = get();
+  
+  // Convertir la imagen a formato Base64
+  const imagenDataURL = imagenLienzo.canvas.toDataURL();
+  
+  // Llamar a la función guardarCambios() pasando la imagen en formato Base64
+  guardarCambios(imagenDataURL);
 }
-const guardarCambiosButton = document.getElementById('guardarButton');
 
-guardarCambiosButton.addEventListener('click', function () {
-  // Obtener los datos del lienzo y las figuras en JSON
-  const lienzo = document.getElementById('canvas');
-  const figurasJson = obtenerFigurasJson(); // Esta función debe ser implementada para obtener el JSON de las figuras
-  const imagenDataURL = lienzo.toDataURL();
+function guardarCambios(imagenDataURL) {
+  const figurasJson = obtenerFigurasJson();
+  const figurasTextLong = obtenerFigurasTextLong();
+  const nombreProyecto = document.getElementById('nombreProyectoInput').value;
+
   // Crear un objeto FormData para enviar los datos al servidor
   const formData = new FormData();
-  formData.append('nombre_proyecto', 'Nombre del Proyecto'); // Reemplaza con el nombre del proyecto
+  formData.append('nombre_proyecto', nombreProyecto);
   formData.append('usuario_id', 9); // Reemplaza con el ID del usuario
-  formData.append('imagen_proyecto', lienzo.toDataURL()); // Convertir el lienzo a imagen y adjuntarlo
-  formData.append('figuras_json', JSON.stringify(figurasJson)); // Convertir el JSON de las figuras a cadena
+  formData.append('imagen_proyecto', imagenDataURL);
+  formData.append('figuras_json', figurasJson);
+  formData.append('figuras_textlong', figurasTextLong);
+
   // Crear una solicitud AJAX
   const xhr = new XMLHttpRequest();
   xhr.open('POST', 'proyectos.php'); // Reemplaza con la ruta al script que procesará la solicitud
 
-  // Enviar la solicitud al servidor
+  // Agregar un listener de evento para manejar la respuesta del servidor
+  xhr.addEventListener('load', function () {
+    if (xhr.status === 200) {
+      console.log(xhr.responseText); // Mensaje de respuesta del servidor
+    } else {
+      console.log('Error al guardar el proyecto.'); // Mensaje de error si la solicitud falla
+    }
+  });
+
+  // Enviar los datos al servidor
   xhr.send(formData);
-});
+}
+
+const guardarCambiosButton = document.getElementById('Nuevoproyecto');
+guardarCambiosButton.addEventListener('click', guardarCambios);
+
 function obtenerFigurasJson() {
+  // Esta función debe ser implementada para obtener el JSON de las figuras
   let shapesJson = JSON.stringify(shapes);
-  console.log(shapesJson);
+  return shapesJson;
+}
+
+function obtenerFigurasTextLong() {
+  // Esta función debe ser implementada para obtener las figuras como texto largo
+  let shapesTextLong = convertirFigurasATextLong(shapes); // Reemplaza esta línea con tu implementación
+  return shapesTextLong;
+}
+function convertirFigurasATextLong(figuras) {
+  let shapesTextLong = '';
+  
+  // Recorrer cada figura
+  for (let i = 0; i < figuras.length; i++) {
+    const figura = figuras[i];
+    
+    // Crear una cadena de texto que representa la figura
+    const figuraTextLong = `${figura.constructor.name},${figura.x},${figura.y},${figura.width},${figura.height},${figura.color},${figura.opacity},${figura.opacityBorder},${figura.fontSize},${figura.cornerRadius}`;
+    
+    // Agregar la cadena de texto de la figura al resultado final
+    shapesTextLong += figuraTextLong;
+    
+    // Agregar un separador de figuras si no es la última figura
+    if (i < figuras.length - 1) {
+      shapesTextLong += ';';
+    }
+  }
+  
+  return shapesTextLong;
+}
+
+function eliminarProyecto(idProyecto) {
+  $.ajax({
+    url: "eliminar_proyecto.php",
+    type: "POST",
+    data: {
+      idProyecto: idProyecto
+    },
+    success: function (response) {
+      console.log(response);
+      location.reload();
+      // Realizar acciones adicionales después de eliminar el proyecto
+    },
+    error: function (xhr, status, error) {
+      console.log(xhr.responseText);
+      // Realizar acciones en caso de error
+    }
+  });
+  console.log
+}
+
+function editarProyecto(idProyecto) {
+  // Obtener el JSON de las figuras correspondientes al proyecto con el ID proporcionado
+  // Puedes utilizar el ID para realizar una solicitud AJAX al servidor y obtener el JSON de las figuras del proyecto
+  const jsonFiguras = ''; // Reemplaza esto con el JSON de las figuras obtenido desde el servidor
+
+  // Redirigir a la vista de proyectos donde se muestran las figuras guardadas
+  // Puedes utilizar el JSON de las figuras para pasar los datos necesarios a la vista de edición
+  window.location.href = 'user-project.php?proyecto=' + idProyecto + '&figuras=' + encodeURIComponent(jsonFiguras);
 }

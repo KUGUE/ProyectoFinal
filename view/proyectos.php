@@ -1,25 +1,34 @@
 <?php
-include("con_db.php");
-// Obtener los datos del formulario
-$nombre_proyecto = $_POST['nombre_proyecto'];
-$usuario_id = $_POST['usuario_id'];
-$imagen_proyecto = $_POST['imagen_proyecto'];
-$figuras_json = json_encode($_POST['figuras_json']); // Convertir a JSON
-// Conectar a la base de datos
+include("./showaccount.php");
 
+$conexion = mysqli_connect("localhost", "root", "", "zwdesingn");
 if ($conexion->connect_error) {
     die("Error en la conexión a la base de datos: " . $conexion->connect_error);
 }
 
-// FALTA ACTUALZIAR 
-$stmt = $conexion->prepare("UPDATE INTO proyectos WHERE (nombre_proyecto, usuario_id, imagen_proyecto, figuras_json) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("siss", $nombre_proyecto, $usuario_id, $imagen_proyecto, $figuras_json);
+// Obtener los datos del proyecto del formulario
+$nombreProyecto = $_POST['nombre_proyecto'];
+$idUsuario = $_POST['usuario_id'];
+$imagenProyectoBase64 = $_POST['imagen_proyecto'];
+$figurasJson = $_POST['figuras_json'];
+$figurasTextLong = $_POST['figuras_textlong'];
 
-if ($stmt->execute()) {
-    echo "Datos insertados correctamente.";
+// Convertir la imagen Base64 a un objeto de imagen
+$imagenProyecto = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imagenProyectoBase64));
+
+// Insertar los datos en la base de datos
+$sql = "INSERT INTO proyectos (nombre_proyecto, usuario_id, imagen_proyecto, figuras_json, figuras_textlong) VALUES (?, ?, ?, ?, ?)";
+$stmt = mysqli_prepare($conexion, $sql);
+mysqli_stmt_bind_param($stmt, 'sisss', $nombreProyecto, $idUsuario, $imagenProyecto, $figurasJson, $figurasTextLong);
+mysqli_stmt_execute($stmt);
+
+if (mysqli_stmt_affected_rows($stmt) > 0) {
+    echo 'Proyecto guardado exitosamente.';
 } else {
-    echo "Error al insertar los datos: " . $stmt->error;
+    echo 'Error al guardar el proyecto.';
 }
-$stmt->close();
-$conexion->close();
+
+// Cerrar la conexión a la base de datos
+mysqli_stmt_close($stmt);
+mysqli_close($conexion);
 ?>
