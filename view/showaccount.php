@@ -7,9 +7,9 @@
 
     $busqueda = $conex->query("SELECT * FROM USUARIOS WHERE ID = (SELECT ID FROM USUARIOS WHERE CORREO = '$activo')");
 
-    while ($alumnosFila = $busqueda->fetch_assoc()) {
-        $nombre1 = $alumnosFila['nombre'];
-        $correo3 = $alumnosFila['correo'];
-        $id  = $alumnosFila['id'];
+    while ($loguado = $busqueda->fetch_assoc()) {
+        $nombre1 = $loguado['nombre'];
+        $correo3 = $loguado['correo'];
+        $id  = $loguado['id'];
     }
 

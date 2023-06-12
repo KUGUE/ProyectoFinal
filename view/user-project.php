@@ -1,3 +1,6 @@
+<?php
+include("ShowAccount.php")
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,8 +51,11 @@
                     <label for="">NOMBRE DEL PROYECTO :</label>
                     <input min="0" type="text" name="" id="nombreProyectoInput">
                 </div>
-                <a class="main-btn save-btn px-3 align-right" href="user-designs.php">MIS PROYECTOS</a>
-                <a class="main-btn save-btn px-3 align-right" id="guardarButton" href="#">GUARDAR CAMBIOS</a>
+                <a class="main-btn save-btn px-3 align-right" href="user-designs.php" >MIS PROYECTOS</a>
+                <button onclick="capturarLienzoYGuardar(<?php echo $id ?>)" type="button" class="mx-1">
+                GUARDAR CAMBIOS
+                    </button>
+             
             </div>
         </div>
 

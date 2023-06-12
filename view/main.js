@@ -7,18 +7,22 @@ let isDrawingCircle = false;
 let isDrawingLine = false;
 let circle = null;
 let line = null;
+let id = 0;
+
 let lineStartX, lineStartY, endX, endY;
 
-document.getElementById('guardarButton').addEventListener('click', capturarLienzoYGuardar);
+
 
 function setup() {
   let canvas = createCanvas(1450, 950);
   canvas.parent("sidebar");
   canvas.mousePressed(canvasMouseClicked);
+  editarProyecto();
 }
 function draw() {
   background(100);
   // Dibujar todas las formas
+  // console.log(shapes);
   if (isDrawingSquare && square) {
     let squareWidth = mouseX - lineStartX;
     let squareHeight = mouseY - lineStartY;
@@ -810,7 +814,8 @@ function ddaLine(x1, y1, x2, y2) {
   }
 }
 
-function capturarLienzoYGuardar() {
+function capturarLienzoYGuardar(id) {
+ id= id;
   // Capturar el lienzo en un objeto p5.Image
   const imagenLienzo = get();
   
@@ -818,10 +823,10 @@ function capturarLienzoYGuardar() {
   const imagenDataURL = imagenLienzo.canvas.toDataURL();
   
   // Llamar a la función guardarCambios() pasando la imagen en formato Base64
-  guardarCambios(imagenDataURL);
+  guardarCambios(imagenDataURL,id);
 }
 
-function guardarCambios(imagenDataURL) {
+function guardarCambios(imagenDataURL,id) {
   const figurasJson = obtenerFigurasJson();
   const figurasTextLong = obtenerFigurasTextLong();
   const nombreProyecto = document.getElementById('nombreProyectoInput').value;
@@ -829,11 +834,11 @@ function guardarCambios(imagenDataURL) {
   // Crear un objeto FormData para enviar los datos al servidor
   const formData = new FormData();
   formData.append('nombre_proyecto', nombreProyecto);
-  formData.append('usuario_id', 9); // Reemplaza con el ID del usuario
+  formData.append('usuario_id', id); // Reemplaza con el ID del usuario
   formData.append('imagen_proyecto', imagenDataURL);
   formData.append('figuras_json', figurasJson);
   formData.append('figuras_textlong', figurasTextLong);
-
+  
   // Crear una solicitud AJAX
   const xhr = new XMLHttpRequest();
   xhr.open('POST', 'proyectos.php'); // Reemplaza con la ruta al script que procesará la solicitud
@@ -908,11 +913,50 @@ function eliminarProyecto(idProyecto) {
 }
 
 function editarProyecto(idProyecto) {
-  // Obtener el JSON de las figuras correspondientes al proyecto con el ID proporcionado
-  // Puedes utilizar el ID para realizar una solicitud AJAX al servidor y obtener el JSON de las figuras del proyecto
-  const jsonFiguras = ''; // Reemplaza esto con el JSON de las figuras obtenido desde el servidor
+  // Realizar una solicitud AJAX para obtener el JSON de las figuras del proyecto
+  $.ajax({
+    url: "obtener_proyecto.php",
+    type: "POST",
+    data: {
+      idProyecto: idProyecto
+    },
+    success: function(response) {
+      const proyecto = JSON.parse(response);
+      const figurasJson = proyecto.figuras_json;
 
-  // Redirigir a la vista de proyectos donde se muestran las figuras guardadas
-  // Puedes utilizar el JSON de las figuras para pasar los datos necesarios a la vista de edición
-  window.location.href = 'user-project.php?proyecto=' + idProyecto + '&figuras=' + encodeURIComponent(jsonFiguras);
+
+      obtenerFigurasJson(figurasJson);
+      // const figuritas = JSON.parse(figurasJson);
+      const figuritass = JSON.parse(figurasJson);
+
+      console.log("el proyecto contiene esta figura: " + figurasJson);
+      // console.log("el proyecto contiene esta figura: " + figuritas.name);
+      console.log("el proyecto contiene esta figura: " + figuritass[0].color);
+
+
+      const urlVistaProyectos = `user-project.php?idProyecto=${idProyecto}`;
+      window.location.href = urlVistaProyectos;
+      // Redirigir a la vista de proyectos
+      let i=0;
+      for(const figurita of figuritass  ) {
+
+        if (figuritass[i].name =="Circulo") {
+          circle = new Circle(figuritass[i].x, figuritass[i].y, figuritass[i].width, figuritass[i].height,figuritass[i].color , figuritass[i].borderColor, figuritass[i].opacity, figuritass[i].strokeWeight, figuritass[i].opacityBorder, 0);
+          console.log(figuritass[i].x)
+          circle.name = "Circulo";
+          shapes.push(circle);
+          console.log("si entro ")
+        }else{
+          console.log("no entro")
+        }
+        i++;
+      }
+
+     
+    },
+    error: function(xhr, status, error) {
+      console.log("Error al cargar el proyecto: " + xhr.responseText);
+      // Realizar acciones en caso de error
+    }
+  });
 }
