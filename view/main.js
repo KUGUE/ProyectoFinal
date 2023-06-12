@@ -17,7 +17,7 @@ function setup() {
   let canvas = createCanvas(1450, 950);
   canvas.parent("sidebar");
   canvas.mousePressed(canvasMouseClicked);
-  editarProyecto();
+
 }
 function draw() {
   background(100);
@@ -934,10 +934,12 @@ function editarProyecto(idProyecto) {
       console.log("el proyecto contiene esta figura: " + figuritass[0].color);
 
 
-      const urlVistaProyectos = `user-project.php?idProyecto=${idProyecto}`;
+      const urlVistaProyectos = `user-project.php`;
       window.location.href = urlVistaProyectos;
+
       // Redirigir a la vista de proyectos
       let i=0;
+     
       for(const figurita of figuritass  ) {
 
         if (figuritass[i].name =="Circulo") {
@@ -945,13 +947,15 @@ function editarProyecto(idProyecto) {
           console.log(figuritass[i].x)
           circle.name = "Circulo";
           shapes.push(circle);
-          console.log("si entro ")
+          pintarCirculos()
+          updateElementsList();
         }else{
           console.log("no entro")
         }
+        
         i++;
       }
-
+ 
      
     },
     error: function(xhr, status, error) {
