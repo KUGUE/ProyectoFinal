@@ -1,5 +1,6 @@
 <?php
 include("ShowAccount.php")
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +53,7 @@ include("ShowAccount.php")
                     <input min="0" type="text" name="" id="nombreProyectoInput">
                 </div>
                 <a class="main-btn save-btn px-3 align-right" href="user-designs.php" >MIS PROYECTOS</a>
-                <button onclick="capturarLienzoYGuardar(<?php echo $id ?>)" type="button" class="mx-1">
-                GUARDAR CAMBIOS
-                    </button>
-             
+                <button onclick="capturarLienzoYGuardar(<?php echo $id ?>)" type="button" class="mx-1">GUARDAR CAMBIOS</button>
             </div>
         </div>
 
@@ -203,7 +201,7 @@ include("ShowAccount.php")
         </div>
     </form>
 </body>
-<script src="main.js"></script>
+<script src="userproject.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </html>

@@ -147,7 +147,7 @@ mysqli_close($conexion);
                                 <h4 class="text-left">' . $proyecto['nombre_proyecto'] . '</h4> 
                                 <div class="d-flex justify-content-center">
                                 <button id="eliminar"type="button" class="nav-link px-3 my-3 main-btn" data-id="' . $proyecto['id'] . '" onclick="eliminarProyecto(' . $proyecto['id'] . ')">ELIMINAR</button>
-                                <button type="button" class="nav-link px-3 my-3 main-btn" data-json="' . $proyecto['figuras_json'] . '" onclick="editarProyecto(' . $proyecto['id'] . ')">EDITAR</button>
+                                <button type="button" class="nav-link px-3 my-3 main-btn"  onclick="editarProyecto(' . $proyecto['id'] . ')">EDITAR</button>
                                 </div>
                             </div>
                         </div>';
@@ -165,6 +165,7 @@ mysqli_close($conexion);
     <script src="../public/js/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="userproject.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
