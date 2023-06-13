@@ -1,5 +1,5 @@
 window.addEventListener("load", (event) => {
-
+    
 
     console.log("page is fully loaded");
     // Obtener la URL actual
@@ -52,7 +52,8 @@ function setup() {
     let canvas = createCanvas(1450, 950);
     canvas.parent("sidebar");
     canvas.mousePressed(canvasMouseClicked);
-    obtenerFiguras()
+    obtenerFiguras();
+   
 }
 function draw() {
 
@@ -853,6 +854,7 @@ function ddaLine(x1, y1, x2, y2) {
 }
 function capturarLienzoYGuardar(id) {
     id = id;
+    validar= false;
     // Capturar el lienzo en un objeto p5.Image
     const imagenLienzo = get();
 
@@ -907,7 +909,8 @@ function obtenerFiguras() {
             const proyecto = JSON.parse(response);
             const figurasJson = proyecto.figuras_json;
             const figuras = JSON.parse(figurasJson);
-
+            var nombreProyecto = proyecto.nombre_proyecto;
+            document.getElementById("nombreProyectoInput").value = nombreProyecto;
             for (let i = 0; i < figuras.length; i++) {
                 const figura = figuras[i];
                 const width = figura.width;
@@ -937,28 +940,30 @@ function obtenerFiguras() {
                     const square = new Square(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder, cornerRadius);
                     square.name = "Cuadrado";
                     shapes.push(square);
-                }
-
-                if (figuras[i].name === 'Circulo') {
+                    updateElementsList();
+                } else if (figuras[i].name === 'Circulo') {
                     console.log("ES UN CIRCULO");
-                    const circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacityBorder);
+                    const circle = new Circle(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder);
                     circle.name = "Circulo";
                     shapes.push(circle);
-                }
-
-                if (figuras[i].name === 'Linea') {
+                    updateElementsList();
+                } else if (figuras[i].name === 'Linea') {
                     console.log("ES UNA LINEA");
-                    const linea = new Linea(x, y, lineEndX, lineEndY, [0, 0, 0], 255, strokeWeight);
+                    const linea = new Linea(x, y, mouseX, mouseY, [0, 0, 0], 25, 10);
                     linea.name = "Linea";
                     shapes.push(linea);
-                }
-
-                if (figuras[i].name === 'Texto') {
+                    console.log(linea);
+                    updateElementsList();
+                } else if (figuras[i].name === 'Texto') {
                     console.log("ES UN TEXTO");
                     const textShape = new TextShape(x, y, textString, color, 255, fontSize);
                     shapes.push(textShape);
+                    updateElementsList();
                 }
+            
             }
+            
+
         },
         error: function (error) {
             console.log("Error al obtener el proyecto:", error);

@@ -36,6 +36,7 @@ function editarProyecto(idProyecto) {
       const figuritass = JSON.parse(figurasJson);
 
       window.location.href = 'user-project.php?id=' + idProyecto ; 
+      
     },
 
     error: function(xhr, status, error) {
