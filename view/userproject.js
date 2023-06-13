@@ -42,6 +42,7 @@ let isDrawingCircle = false;
 let isDrawingLine = false;
 let circle = null;
 let line = null;
+let validar = true;
 let id = 0;
 let lineStartX, lineStartY, endX, endY;
 
@@ -51,9 +52,10 @@ function setup() {
     let canvas = createCanvas(1450, 950);
     canvas.parent("sidebar");
     canvas.mousePressed(canvasMouseClicked);
-    
+    obtenerFiguras()
 }
 function draw() {
+
     background(100);
     // Dibujar todas las formas
     // console.log(shapes);
@@ -81,7 +83,7 @@ function draw() {
     }
 
     for (let shape of shapes) {
-        obtenerFiguras();
+
         shape.display();
     }
 }
@@ -892,74 +894,78 @@ function guardarCambios(imagenDataURL, id) {
 }
 
 function obtenerFiguras() {
-    const idProyecto = document.getElementById("obtener_id"); // El ID del proyecto que deseas obtener
-    console.log(idProyecto.value);
+
+    let id = document.getElementById("obtener_id").value;
+
     $.ajax({
-      url: "obtener_proyecto.php",
-      type: "POST",
-      data: {
-        idProyecto: idProyecto
-      },
-      success: function(response) {
-        const proyecto = JSON.parse(response);
-        const figurasJson = proyecto.figuras_json;
-        const figuras = JSON.parse(figurasJson);
-  
-        for (let i = 0; i < figuras.length; i++) {
-          const figura = figuras[i];
-          const width = figura.width;
-          const height = figura.height;
-          const x = figura.x;
-          const y = figura.y;
-          const radius = figura.radius;
-          const opacityBorder = figura.opacityBorder;
-          const opacity = figura.opacity;
-          const strokeWeight = figura.strokeWeight;
-          const color = figura.color;
-          const fontSize = figura.fontSize;
-          const borderColor = figura.borderColor;
-          const cornerRadius = figura.cornerRadius;
-          const visible = figura.visible;
-          const name = figura.name;
-          const lineStartX = figura.x;
-          const lineStartY = figura.y;
-          const lineEndX = figura.x2;
-          const lineEndY = figura.y2;
-          const textString = figura.textString;
-  
-          console.log(figura);
-  
-          if (figuras[i].name === 'Cuadrado') {
-            console.log("ES UN CUADRADO");
-            const square = new Square(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder, cornerRadius);
-            shapes.push(square);
-          }
-  
-          if (figuras[i].name === 'Circulo') {
-            console.log("ES UN CIRCULO");
-            const circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacityBorder);
-            shapes.push(circle);
-          }
-  
-          if (figuras[i].name === 'Linea') {
-            console.log("ES UNA LINEA");
-            const linea = new Linea(x, y, lineEndX, lineEndY, [0, 0, 0], 255, strokeWeight);
-            shapes.push(linea);
-          }
-  
-          if (figuras[i].name === 'Texto') {
-            console.log("ES UN TEXTO");
-            const textShape = new TextShape(x, y, textString, color, 255, fontSize);
-            shapes.push(textShape);
-          }
+        url: "obtener_proyecto.php",
+        type: "POST",
+        data: {
+            idProyecto: id
+        },
+        success: function (response) {
+            const proyecto = JSON.parse(response);
+            const figurasJson = proyecto.figuras_json;
+            const figuras = JSON.parse(figurasJson);
+
+            for (let i = 0; i < figuras.length; i++) {
+                const figura = figuras[i];
+                const width = figura.width;
+                const height = figura.height;
+                const x = figura.x;
+                const y = figura.y;
+                const radius = figura.radius;
+                const opacityBorder = figura.opacityBorder;
+                const opacity = figura.opacity;
+                const strokeWeight = figura.strokeWeight;
+                const color = figura.color;
+                const fontSize = figura.fontSize;
+                const borderColor = figura.borderColor;
+                const cornerRadius = figura.cornerRadius;
+                const visible = figura.visible;
+                const name = figura.name;
+                const lineStartX = figura.x;
+                const lineStartY = figura.y;
+                const lineEndX = figura.x2;
+                const lineEndY = figura.y2;
+                const textString = figura.textString;
+
+                console.log(figura);
+
+                if (figuras[i].name === 'Cuadrado') {
+                    console.log("ES UN CUADRADO");
+                    const square = new Square(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder, cornerRadius);
+                    square.name = "Cuadrado";
+                    shapes.push(square);
+                }
+
+                if (figuras[i].name === 'Circulo') {
+                    console.log("ES UN CIRCULO");
+                    const circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacityBorder);
+                    circle.name = "Circulo";
+                    shapes.push(circle);
+                }
+
+                if (figuras[i].name === 'Linea') {
+                    console.log("ES UNA LINEA");
+                    const linea = new Linea(x, y, lineEndX, lineEndY, [0, 0, 0], 255, strokeWeight);
+                    linea.name = "Linea";
+                    shapes.push(linea);
+                }
+
+                if (figuras[i].name === 'Texto') {
+                    console.log("ES UN TEXTO");
+                    const textShape = new TextShape(x, y, textString, color, 255, fontSize);
+                    shapes.push(textShape);
+                }
+            }
+        },
+        error: function (error) {
+            console.log("Error al obtener el proyecto:", error);
         }
-      },
-      error: function(error) {
-        console.log("Error al obtener el proyecto:", error);
-      }
     });
-  }
-  
+}
+
 
 const guardarCambiosButton = document.getElementById('Nuevoproyecto');
 guardarCambiosButton.addEventListener('click', guardarCambios);
