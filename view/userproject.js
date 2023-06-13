@@ -929,8 +929,8 @@ function obtenerFiguras() {
                 const name = figura.name;
                 const lineStartX = figura.x;
                 const lineStartY = figura.y;
-                const lineEndX = figura.x2;
-                const lineEndY = figura.y2;
+                const x2 = figura.x2;
+                const y2 = figura.y2;
                 const textString = figura.textString;
 
                 console.log(figura);
@@ -948,11 +948,11 @@ function obtenerFiguras() {
                     shapes.push(circle);
                     updateElementsList();
                 } else if (figuras[i].name === 'Linea') {
-                    console.log("ES UNA LINEA");
-                    const linea = new Linea(x, y, mouseX, mouseY, [0, 0, 0], 25, 10);
+                    console.log("ES UNA LINEA" + figuras[i].name);
+                    const linea = new Linea(lineStartX, lineStartY, x2, y2, borderColor, 25, strokeWeight);
                     linea.name = "Linea";
                     shapes.push(linea);
-                    console.log(linea);
+              
                     updateElementsList();
                 } else if (figuras[i].name === 'Texto') {
                     console.log("ES UN TEXTO");
