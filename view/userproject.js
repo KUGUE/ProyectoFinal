@@ -50,7 +50,7 @@ function setup() {
     let canvas = createCanvas(1450, 950);
     canvas.parent("sidebar");
     canvas.mousePressed(canvasMouseClicked);
-
+    obtenerFiguras();
 }
 function draw() {
     background(100);
@@ -200,6 +200,7 @@ function mouseClicked() {
             let strokeWeight = 10;
             let linea = new Linea(lineStartX, lineStartY, lineEndX, lineEndY, borderColor, opacityBorder, strokeWeight);
             shapes.push(linea);
+            LINEA.name = "Linea";
             linea.display(); // Llamar a la función display() para dibujar la línea en el lienzo
             updateElementsList();
         }
@@ -887,53 +888,76 @@ function guardarCambios(imagenDataURL, id) {
     // Enviar los datos al servidor
     xhr.send(formData);
 }
-function editarProyecto(idProyecto) {
-    // Realizar una solicitud AJAX para obtener el JSON de las figuras del proyecto
+
+function obtenerFiguras() {
+
+
     $.ajax({
-        url: "obteneridproyecto.php",
-        type: "POST",
-        data: {
-            idProyecto: idProyecto
-        },
-        success: function (response) {
-            const proyecto = JSON.parse(response);
-            const figurasJson = proyecto.figuras_json;
-            obtenerFigurasJson(figurasJson);
-            // const figuritas = JSON.parse(figurasJson);
-            const figuritass = JSON.parse(figurasJson);
-            console.log("el proyecto contiene esta figura: " + figuritass[0].color);
-   
-            // Redirigir a la vista de proyectos
-            /*         let i=0;
-                   
-                    for(const figurita of figuritass  ) {
-              
-                      if (figuritass[i].name =="Circulo") {
-                        circle = new Circle(figuritass[i].x, figuritass[i].y, figuritass[i].width, figuritass[i].height,figuritass[i].color , figuritass[i].borderColor, figuritass[i].opacity, figuritass[i].strokeWeight, figuritass[i].opacityBorder, 0);
-                        console.log(figuritass[i].x)
-                        circle.name = "Circulo";
-                        shapes.push(circle);
-                        pintarCirculos()
-                        updateElementsList();
-                        dibujarFiguras(shapes);
-                      }else{
-                        console.log("no entro")
-                      }
-                      
-                      i++;
-                    } */
-
-            // Mostrar las figuras en el lienzo
-
-        },
-
-        error: function (xhr, status, error) {
-            console.log("Error al cargar el proyecto: " + xhr.responseText);
-            // Realizar acciones en caso de error
+      url: "obtener_proyecto.php",
+      type: "POST",
+      data: {
+        idProyecto: id
+      },
+      success: function(response) {
+        const proyecto = JSON.parse(response);
+        const figurasJson = proyecto.figuras_json;
+        const figuras = JSON.parse(figurasJson);
+  
+        for (let i = 0; i < figuras.length; i++) {
+          const figura = figuras[i];
+          const width = figura.width;
+          const height = figura.height;
+          const x = figura.x;
+          const y = figura.y;
+          const radius = figura.radius;
+          const opacityBorder = figura.opacityBorder;
+          const opacity = figura.opacity;
+          const strokeWeight = figura.strokeWeight;
+          const color = figura.color;
+          const fontSize = figura.fontSize;
+          const borderColor = figura.borderColor;
+          const cornerRadius = figura.cornerRadius;
+          const visible = figura.visible;
+          const name = figura.name;
+          const lineStartX = figura.x;
+          const lineStartY = figura.y;
+          const lineEndX = figura.x2;
+          const lineEndY = figura.y2;
+          const textString = figura.textString;
+  
+          console.log(figura);
+  
+          if (figuras[i].name === 'Cuadrado') {
+            console.log("ES UN CUADRADO");
+            const square = new Square(x, y, width, height, color, borderColor, opacity, strokeWeight, opacityBorder, cornerRadius);
+            shapes.push(square);
+          }
+  
+          if (figuras[i].name === 'Circulo') {
+            console.log("ES UN CIRCULO");
+            const circle = new Circle(x, y, radius, radius, color, borderColor, opacity, strokeWeight, opacityBorder);
+            shapes.push(circle);
+          }
+  
+          if (name === 'Linea') {
+            console.log("ES UNA LINEA");
+            const linea = new Linea(x, y, lineEndX, lineEndY, [0, 0, 0], 255, strokeWeight);
+            shapes.push(linea);
+          }
+  
+          if (name === 'Texto') {
+            console.log("ES UN TEXTO");
+            const textShape = new TextShape(x, y, textString, color, 255, fontSize);
+            shapes.push(textShape);
+          }
         }
+      },
+      error: function(error) {
+        console.log("Error al obtener el proyecto:", error);
+      }
     });
-}
-
+  }
+  
 
 const guardarCambiosButton = document.getElementById('Nuevoproyecto');
 guardarCambiosButton.addEventListener('click', guardarCambios);
