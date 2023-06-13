@@ -1,5 +1,6 @@
 <?php
 include("showaccount.php");
+
 $conexion = mysqli_connect("localhost", "root", "", "zwdesingn");
 if ($conexion->connect_error) {
     die("Error en la conexión a la base de datos: " . $conexion->connect_error);

@@ -1,4 +1,6 @@
 window.addEventListener("load", (event) => {
+
+
     console.log("page is fully loaded");
     // Obtener la URL actual
     const url = window.location.href;
@@ -7,7 +9,6 @@ window.addEventListener("load", (event) => {
     // Obtener el ID a partir del signo de igual "=" utilizando substring
     const idProyecto = url.substring(igualIndex + 1);
     console.log(idProyecto);
-
 
     // Crear un objeto FormData y agregar el ID del proyecto
     const formData = new FormData();
@@ -50,7 +51,7 @@ function setup() {
     let canvas = createCanvas(1450, 950);
     canvas.parent("sidebar");
     canvas.mousePressed(canvasMouseClicked);
-    obtenerFiguras();
+    
 }
 function draw() {
     background(100);
@@ -80,6 +81,7 @@ function draw() {
     }
 
     for (let shape of shapes) {
+        obtenerFiguras();
         shape.display();
     }
 }
@@ -890,13 +892,13 @@ function guardarCambios(imagenDataURL, id) {
 }
 
 function obtenerFiguras() {
-
-
+    const idProyecto = document.getElementById("obtener_id"); // El ID del proyecto que deseas obtener
+    console.log(idProyecto.value);
     $.ajax({
       url: "obtener_proyecto.php",
       type: "POST",
       data: {
-        idProyecto: id
+        idProyecto: idProyecto
       },
       success: function(response) {
         const proyecto = JSON.parse(response);
@@ -939,13 +941,13 @@ function obtenerFiguras() {
             shapes.push(circle);
           }
   
-          if (name === 'Linea') {
+          if (figuras[i].name === 'Linea') {
             console.log("ES UNA LINEA");
             const linea = new Linea(x, y, lineEndX, lineEndY, [0, 0, 0], 255, strokeWeight);
             shapes.push(linea);
           }
   
-          if (name === 'Texto') {
+          if (figuras[i].name === 'Texto') {
             console.log("ES UN TEXTO");
             const textShape = new TextShape(x, y, textString, color, 255, fontSize);
             shapes.push(textShape);

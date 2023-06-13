@@ -3,11 +3,13 @@ include("./showaccount.php");
 
 // Obtener el ID del proyecto desde la solicitud AJAX
 $idProyecto = $_POST['idProyecto'];
+$_SESSION['proyecto_id'] = $idProyecto;
 
 $conexion = mysqli_connect("localhost", "root", "", "zwdesingn");
 if ($conexion->connect_error) {
     die("Error en la conexión a la base de datos: " . $conexion->connect_error);
 }
+
 
 // Obtener los detalles del proyecto y las figuras desde la base de datos
 $sql = "SELECT * FROM proyectos WHERE id = '$idProyecto'";

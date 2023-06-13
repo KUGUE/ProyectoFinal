@@ -35,32 +35,7 @@ function editarProyecto(idProyecto) {
       // const figuritas = JSON.parse(figurasJson);
       const figuritass = JSON.parse(figurasJson);
 
-      console.log("el proyecto contiene esta figura: " + figurasJson);
-      // console.log("el proyecto contiene esta figura: " + figuritas.name);
-      console.log("el proyecto contiene esta figura: " + figuritass[0].color);
-      window.location.href = 'user-project.php?id=' + idProyecto ;
-      // Redirigir a la vista de proyectos
-      let i=0;
-     
-      for(const figurita of figuritass  ) {
-
-        if (figuritass[i].name =="Circulo") {
-          circle = new Circle(figuritass[i].x, figuritass[i].y, figuritass[i].width, figuritass[i].height,figuritass[i].color , figuritass[i].borderColor, figuritass[i].opacity, figuritass[i].strokeWeight, figuritass[i].opacityBorder, 0);
-          console.log(figuritass[i].x)
-          circle.name = "Circulo";
-          shapes.push(circle);
-          pintarCirculos()
-          updateElementsList();
-          dibujarFiguras(shapes);
-        }else{
-          console.log("no entro")
-        }
-        
-        i++;
-      }
-      
-  // Mostrar las figuras en el lienzo
-
+      window.location.href = 'user-project.php?id=' + idProyecto ; 
     },
 
     error: function(xhr, status, error) {

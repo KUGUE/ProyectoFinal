@@ -84,6 +84,7 @@ include("ShowAccount.php")
 
             <!-- CANVAS AREA -->
             <div class="canvas">
+                <input type="hidden" value="<?php echo $_SESSION['proyecto_id']; ?>" id="obtener_id">
                 <div id="sidebar"></div>
             </div>
             <!-- SIDEBAR OPTIONS -->
